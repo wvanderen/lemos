@@ -5,3 +5,4 @@ pnpm-lock.yaml
 coverage
 dist
 .vite
+.turbo

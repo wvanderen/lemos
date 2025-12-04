@@ -1,7 +1,7 @@
 # ADR 0001: Initialize Core Architecture
 
 ## Status
-Accepted
+Done
 
 ## Context
 We need a minimal but provable skeleton for LemOS that demonstrates monorepo wiring, event-driven communication, and module registration before expanding features.
