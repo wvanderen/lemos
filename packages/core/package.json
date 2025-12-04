@@ -1,0 +1,20 @@
+{
+  "name": "@lemos/core",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -w -p tsconfig.json",
+    "test": "vitest run",
+    "lint": "eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4",
+    "vitest": "^1.2.0"
+  }
+}

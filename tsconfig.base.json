@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node"],
+    "paths": {
+      "@lemos/core": ["packages/core/src"],
+      "@lemos/ui": ["packages/ui/src"],
+      "@lemos/modules-hello-world": ["packages/modules/hello-world/src"]
+    }
+  },
+  "include": ["packages", "apps", "docs"]
+}
