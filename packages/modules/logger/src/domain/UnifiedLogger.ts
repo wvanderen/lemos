@@ -94,14 +94,8 @@ export class UnifiedLogger implements ILoggerModule {
       // Build query filter
       const queryFilter: Record<string, unknown> = {};
 
-      if (filters.eventType) {
-        if (Array.isArray(filters.eventType)) {
-          // For array of event types, we'll need to query all and filter in memory
-          // since IStorage doesn't support OR queries
-          queryFilter.eventType = filters.eventType[0]; // Use first as base query
-        } else {
-          queryFilter.eventType = filters.eventType;
-        }
+      if (filters.eventType && !Array.isArray(filters.eventType)) {
+        queryFilter.eventType = filters.eventType;
       }
 
       if (filters.constellationId) {
