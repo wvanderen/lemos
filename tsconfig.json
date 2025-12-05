@@ -4,7 +4,11 @@
   "references": [
     { "path": "./packages/core" },
     { "path": "./packages/ui" },
+    { "path": "./packages/platform-storage-local" },
     { "path": "./packages/modules/hello-world" },
+    { "path": "./packages/modules/dopamine-hero" },
+    { "path": "./packages/modules/session-timer" },
+    { "path": "./packages/modules/ritual-os" },
     { "path": "./apps/web" }
   ]
 }
