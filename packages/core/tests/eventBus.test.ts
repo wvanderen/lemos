@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { EventBus } from '../src/eventBus.js';
-import type { BaseEvent } from '../src/types.js';
+import { EventBus } from '../src/eventBus';
+import type { BaseEvent } from '../src/types';
 
 describe('EventBus', () => {
   it('dispatches events to registered listeners', () => {

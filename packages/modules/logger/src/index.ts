@@ -1,6 +1,6 @@
 import { EventBus, IStorage, GlobalContext } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { UnifiedLogger } from './domain/UnifiedLogger.js';
+import { UnifiedLogger } from './domain/UnifiedLogger';
 
 export { manifest };
 export { UnifiedLogger };

@@ -1,6 +1,6 @@
-import { EventBus } from './eventBus.js';
-import type { LemOSModuleManifest } from './types.js';
-import type { IStorage } from './storage.js';
+import { EventBus } from './eventBus';
+import type { LemOSModuleManifest } from './types';
+import type { IStorage } from './storage';
 
 export class LemOSCore {
   readonly bus = new EventBus();

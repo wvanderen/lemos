@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { EventBus, IStorage, GlobalContext } from '@lemos/core';
-import { UnifiedLogger } from '../src/domain/UnifiedLogger.js';
+import { UnifiedLogger } from '../src/domain/UnifiedLogger';
 
 // Mock storage implementation
 class MockStorage implements IStorage {

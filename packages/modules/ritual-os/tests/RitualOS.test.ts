@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { EventBus } from '@lemos/core';
-import { RitualOS } from '../src/domain/RitualOS.js';
+import { RitualOS } from '../src/domain/RitualOS';
 import morningAnchor from '../rituals/morning-anchor.json';
 
 describe('RitualOS', () => {

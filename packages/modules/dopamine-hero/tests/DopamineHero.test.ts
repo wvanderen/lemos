@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { EventBus } from '@lemos/core';
-import { DopamineHero } from '../src/domain/DopamineHero.js';
+import { DopamineHero } from '../src/domain/DopamineHero';
 
 describe('DopamineHero', () => {
   let bus: EventBus;

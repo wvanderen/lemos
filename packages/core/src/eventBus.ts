@@ -1,4 +1,4 @@
-import type { BaseEvent, EventListener } from './types.js';
+import type { BaseEvent, EventListener } from './types';
 
 export class EventBus {
   private listeners = new Map<string, EventListener[]>();

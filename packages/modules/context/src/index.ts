@@ -1,6 +1,6 @@
 import { EventBus } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { ContextManager } from './domain/ContextManager.js';
+import { ContextManager } from './domain/ContextManager';
 
 export { manifest };
 export { ContextManager };

@@ -1,6 +1,6 @@
 import { EventBus, IStorage } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { ConstellationOS } from './domain/ConstellationOS.js';
+import { ConstellationOS } from './domain/ConstellationOS';
 
 export { manifest };
 export { ConstellationOS };

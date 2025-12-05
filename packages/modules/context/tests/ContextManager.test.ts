@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { EventBus } from '@lemos/core';
-import { ContextManager } from '../src/domain/ContextManager.js';
+import { ContextManager } from '../src/domain/ContextManager';
 
 describe('ContextManager', () => {
   let bus: EventBus;

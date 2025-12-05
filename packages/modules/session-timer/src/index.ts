@@ -1,6 +1,6 @@
 import { EventBus } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { SessionTimer } from './domain/SessionTimer.js';
+import { SessionTimer } from './domain/SessionTimer';
 
 export { manifest };
 export { SessionTimer };
