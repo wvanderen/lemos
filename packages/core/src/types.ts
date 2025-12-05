@@ -16,6 +16,7 @@ export interface LemOSModuleManifest {
 export interface SessionStartedPayload {
   sessionId: string;
   intendedDuration: number;
+  constellationId?: string; // Optional constellation association (Phase 3)
 }
 
 export interface SessionTickPayload {
@@ -28,6 +29,7 @@ export interface SessionEndedPayload {
   sessionId: string;
   actualDuration: number;
   wasCompleted: boolean;
+  constellationId?: string; // Optional constellation association (Phase 3)
 }
 
 export interface EnergyUpdatedPayload {
@@ -55,6 +57,7 @@ export interface RitualCompletedPayload {
   sessionId: string;
   totalDuration: number;
   completedAt: string;
+  constellationId?: string; // Optional constellation association (Phase 3)
 }
 
 export interface RitualAbandonedPayload {
@@ -72,4 +75,27 @@ export interface StateHydratedPayload {
 export interface StatePersistedPayload {
   module: string;
   key: string;
+}
+
+// Constellation Events (Phase 3)
+export interface ConstellationCreatedPayload {
+  id: string;
+  name: string;
+  color: string;
+  icon: string;
+}
+
+export interface ConstellationUpdatedPayload {
+  id: string;
+  changes: {
+    name?: string;
+    description?: string;
+    color?: string;
+    icon?: string;
+    archived?: boolean;
+  };
+}
+
+export interface ConstellationArchivedPayload {
+  id: string;
 }

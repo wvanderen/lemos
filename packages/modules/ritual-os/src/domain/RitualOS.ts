@@ -16,6 +16,7 @@ interface ActiveRitual {
   currentStepIndex: number;
   startedAt: Date;
   stepsCompleted: string[];
+  constellationId: string | null; // Phase 3: Constellation association
 }
 
 export class RitualOS {
@@ -48,7 +49,7 @@ export class RitualOS {
     return this.activeRitual;
   }
 
-  startRitual(ritualId: string): void {
+  startRitual(ritualId: string, constellationId?: string): void {
     const definition = this.rituals.get(ritualId);
 
     if (!definition) {
@@ -68,6 +69,7 @@ export class RitualOS {
       currentStepIndex: 0,
       startedAt: new Date(),
       stepsCompleted: [],
+      constellationId: constellationId ?? null,
     };
 
     this.bus.emit<RitualStartedPayload>({
@@ -123,6 +125,7 @@ export class RitualOS {
     }
 
     const totalDuration = Math.floor((Date.now() - this.activeRitual.startedAt.getTime()) / 1000);
+    const constellationId = this.activeRitual.constellationId;
 
     this.bus.emit<RitualCompletedPayload>({
       id: crypto.randomUUID(),
@@ -133,6 +136,7 @@ export class RitualOS {
         sessionId: this.activeRitual.sessionId,
         totalDuration,
         completedAt: new Date().toISOString(),
+        constellationId: constellationId ?? undefined,
       },
     });
 
@@ -140,7 +144,8 @@ export class RitualOS {
     this.logCompletion(
       this.activeRitual.ritualId,
       totalDuration,
-      this.activeRitual.stepsCompleted
+      this.activeRitual.stepsCompleted,
+      constellationId
     );
 
     // Clear active ritual
@@ -171,13 +176,15 @@ export class RitualOS {
   private async logCompletion(
     ritualId: string,
     durationSeconds: number,
-    stepsCompleted: string[]
+    stepsCompleted: string[],
+    constellationId: string | null
   ): Promise<void> {
     if (!this.storage) return;
 
     try {
       const log: Omit<RitualLog, 'id'> = {
         ritualId,
+        constellationId,
         completedAt: new Date().toISOString(),
         durationSeconds,
         stepsCompleted,

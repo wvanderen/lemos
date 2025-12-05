@@ -6,6 +6,7 @@ export class SessionTimer {
   private bus: EventBus;
   private state: SessionState = 'Idle';
   private sessionId: string | null = null;
+  private constellationId: string | null = null; // Phase 3: Constellation association
   private intendedDuration: number = 0;
   private elapsed: number = 0;
   private tickerInterval: NodeJS.Timeout | null = null;
@@ -14,12 +15,13 @@ export class SessionTimer {
     this.bus = bus;
   }
 
-  startSession(durationMinutes: number): void {
+  startSession(durationMinutes: number, constellationId?: string): void {
     if (this.state === 'Running') {
       throw new Error('Cannot start a new session while one is already running');
     }
 
     this.sessionId = crypto.randomUUID();
+    this.constellationId = constellationId ?? null;
     this.intendedDuration = durationMinutes * 60;
     this.elapsed = 0;
     this.state = 'Running';
@@ -31,6 +33,7 @@ export class SessionTimer {
       payload: {
         sessionId: this.sessionId,
         intendedDuration: this.intendedDuration,
+        constellationId: this.constellationId ?? undefined,
       },
     });
 
@@ -74,6 +77,10 @@ export class SessionTimer {
     return this.elapsed;
   }
 
+  getConstellationId(): string | null {
+    return this.constellationId;
+  }
+
   private startTicker(): void {
     this.tickerInterval = setInterval(() => {
       this.tick();
@@ -113,11 +120,13 @@ export class SessionTimer {
 
   private endSession(wasCompleted: boolean): void {
     const finalSessionId = this.sessionId!;
+    const finalConstellationId = this.constellationId;
     const actualDuration = this.elapsed;
 
     this.stopTicker();
     this.state = 'Idle';
     this.sessionId = null;
+    this.constellationId = null;
     this.elapsed = 0;
     this.intendedDuration = 0;
 
@@ -129,6 +138,7 @@ export class SessionTimer {
         sessionId: finalSessionId,
         actualDuration,
         wasCompleted,
+        constellationId: finalConstellationId ?? undefined,
       },
     });
   }

@@ -19,7 +19,8 @@
     "@lemos/core": "workspace:*",
     "@lemos/modules-session-timer": "workspace:*",
     "@lemos/modules-dopamine-hero": "workspace:*",
-    "@lemos/modules-ritual-os": "workspace:*"
+    "@lemos/modules-ritual-os": "workspace:*",
+    "@lemos/modules-constellation-os": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

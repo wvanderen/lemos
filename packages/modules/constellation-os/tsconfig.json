@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "composite": true,
+    "declaration": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src", "module.manifest.json", "constellations/**/*.json"],
+  "references": [{ "path": "../../core" }]
+}

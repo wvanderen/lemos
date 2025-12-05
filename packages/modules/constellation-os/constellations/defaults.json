@@ -1,0 +1,26 @@
+[
+  {
+    "id": "work",
+    "name": "Work",
+    "description": "Professional projects and career development",
+    "color": "#4A90E2",
+    "icon": "💼",
+    "archived": false
+  },
+  {
+    "id": "personal-growth",
+    "name": "Personal Growth",
+    "description": "Learning, skills development, and self-improvement",
+    "color": "#27AE60",
+    "icon": "🌱",
+    "archived": false
+  },
+  {
+    "id": "health",
+    "name": "Health",
+    "description": "Physical fitness, mental health, and wellbeing",
+    "color": "#E74C3C",
+    "icon": "❤️",
+    "archived": false
+  }
+]

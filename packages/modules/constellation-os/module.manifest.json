@@ -1,0 +1,8 @@
+{
+  "id": "constellation-os",
+  "name": "Constellation OS",
+  "version": "0.1.0",
+  "type": "core",
+  "listensTo": ["SessionEnded", "RitualCompleted"],
+  "emits": ["ConstellationCreated", "ConstellationUpdated", "ConstellationArchived"]
+}
