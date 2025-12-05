@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 import { EventBus, IStorage, GlobalContext } from '@lemos/core';
 import { UnifiedLogger } from '../src/domain/UnifiedLogger.js';
 
