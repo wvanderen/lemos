@@ -18,3 +18,4 @@ export function Panel({ children }: PropsWithChildren): JSX.Element {
 
 export { SessionControl } from './SessionControl.js';
 export { EnergyDisplay } from './EnergyDisplay.js';
+export { RitualControl } from './RitualControl.js';

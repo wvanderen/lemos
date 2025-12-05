@@ -1,0 +1,22 @@
+{
+  "id": "morning-anchor",
+  "name": "Morning Anchor",
+  "description": "Start your day with intention",
+  "steps": [
+    {
+      "id": "hydrate",
+      "prompt": "Drink a glass of water",
+      "durationHint": 30
+    },
+    {
+      "id": "intention",
+      "prompt": "Set one intention for today",
+      "durationHint": 60
+    },
+    {
+      "id": "goals",
+      "prompt": "Review your top 3 goals",
+      "durationHint": 90
+    }
+  ]
+}

@@ -10,6 +10,7 @@
   "references": [
     { "path": "../core" },
     { "path": "../modules/session-timer" },
-    { "path": "../modules/dopamine-hero" }
+    { "path": "../modules/dopamine-hero" },
+    { "path": "../modules/ritual-os" }
   ]
 }

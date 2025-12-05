@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "composite": true,
+    "declaration": true,
+    "resolveJsonModule": true,
+    "allowArbitraryExtensions": false
+  },
+  "include": ["src/**/*", "rituals/**/*.json", "module.manifest.json"],
+  "files": ["rituals/morning-anchor.json"],
+  "references": [{ "path": "../../core" }]
+}
