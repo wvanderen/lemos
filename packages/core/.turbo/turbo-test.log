@@ -6,11 +6,11 @@
 
  RUN  v1.6.1 /home/lem/dev/lemos/packages/core
 
- ✓ tests/eventBus.test.ts  (1 test) 10ms
- ✓ tests/eventBus.test.js  (1 test) 10ms
+ ✓ tests/eventBus.test.ts  (1 test) 6ms
+ ✓ tests/eventBus.test.js  (1 test) 6ms
 
  Test Files  2 passed (2)
       Tests  2 passed (2)
-   Start at  18:00:50
-   Duration  1.39s (transform 99ms, setup 0ms, collect 130ms, tests 20ms, environment 1ms, prepare 422ms)
+   Start at  21:17:31
+   Duration  962ms (transform 76ms, setup 0ms, collect 68ms, tests 12ms, environment 0ms, prepare 399ms)
 

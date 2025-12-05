@@ -1,4 +1,4 @@
-import { EventBus, BaseEvent, SessionStartedPayload, SessionTickPayload, SessionEndedPayload } from '@lemos/core';
+import { EventBus, SessionStartedPayload, SessionTickPayload, SessionEndedPayload } from '@lemos/core';
 
 export type SessionState = 'Idle' | 'Running' | 'Paused';
 
