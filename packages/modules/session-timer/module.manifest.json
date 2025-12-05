@@ -1,0 +1,8 @@
+{
+  "id": "session-timer",
+  "name": "Session Timer",
+  "version": "0.1.0",
+  "type": "core",
+  "listensTo": [],
+  "emits": ["SessionStarted", "SessionTick", "SessionEnded"]
+}

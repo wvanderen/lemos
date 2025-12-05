@@ -12,3 +12,26 @@ export interface LemOSModuleManifest {
   name: string;
   version: string;
 }
+
+export interface SessionStartedPayload {
+  sessionId: string;
+  intendedDuration: number;
+}
+
+export interface SessionTickPayload {
+  sessionId: string;
+  remaining: number;
+  elapsed: number;
+}
+
+export interface SessionEndedPayload {
+  sessionId: string;
+  actualDuration: number;
+  wasCompleted: boolean;
+}
+
+export interface EnergyUpdatedPayload {
+  current: number;
+  delta: number;
+  source: string;
+}
