@@ -39,10 +39,11 @@ function App(): JSX.Element {
 
       // Initialize context module first to ensure it's available for logger
       lemosCore.registerModule(contextManifest, (bus) => contextInit(bus));
+      const contextManager = getContextManager();
 
       // Logger depends on context manager, so initialize it after
       lemosCore.registerModule(loggerManifest, (bus) =>
-        loggerInit(bus, storage, () => getContextManager().getSnapshot())
+        loggerInit(bus, storage, () => contextManager.getSnapshot())
       );
 
       lemosCore.start();
