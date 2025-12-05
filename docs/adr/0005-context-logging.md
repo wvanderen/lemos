@@ -93,17 +93,17 @@ When a user saves a note, we want it automatically tagged with the above context
 4. LoggerModule saves to DB:
 
 ```typescript
-storage.insert("journal_entries", {
+storage.insert("unified_logs", {
   id: generateId(),
-  text: "Had a breakthrough...",
+  eventType: "NoteCreated",
   timestamp: "2025-12-05T14:32:00Z",
+  payload: JSON.stringify({ text: "Had a breakthrough...", timestamp: "2025-12-05T14:32:00Z" }),
   // Context auto-attached:
   constellationId: "constellation-123",
   ritualRunId: "run-999",
   sceneId: null,
   planetaryMode: "earth"
 })
-```
 
 5. Later, when the user asks "Show me all my LemOS Dev notes", we can query:
 
