@@ -99,3 +99,72 @@ export interface ConstellationUpdatedPayload {
 export interface ConstellationArchivedPayload {
   id: string;
 }
+
+export interface ConstellationSelectedPayload {
+  id: string | null;
+}
+
+// Context Events (Phase 5)
+export interface RitualStartedContextPayload {
+  runId: string;
+  ritualId: string;
+}
+
+export interface RitualEndedContextPayload {
+  runId: string;
+}
+
+export interface SceneChangedPayload {
+  sceneId: string | null;
+}
+
+export type PlanetaryMode = 'earth' | 'mars' | 'jupiter' | 'saturn';
+
+export interface PlanetaryModeChangedPayload {
+  mode: PlanetaryMode;
+}
+
+// Global Context (Phase 5)
+export interface GlobalContext {
+  activeConstellationId: string | null;
+  activeRitualId: string | null; // The ritual definition ID (e.g., "morning-anchor")
+  activeRitualRunId: string | null; // The specific run/session ID (UUID)
+  activeSceneId: string | null;
+  planetaryMode: PlanetaryMode;
+  timestamp: string; // ISO timestamp of snapshot
+}
+
+// Logger Types (Phase 5)
+export interface LogEntry {
+  id: string;
+  eventType: string; // e.g., "SessionEnded", "NoteCreated"
+  timestamp: string; // ISO timestamp
+  payload: object; // Original event data
+
+  // Auto-enriched context fields
+  constellationId: string | null;
+  ritualId: string | null; // The ritual definition ID (e.g., "morning-anchor")
+  ritualRunId: string | null; // The specific run/session ID (UUID)
+  sceneId: string | null;
+  planetaryMode: PlanetaryMode;
+}
+
+export interface LogFilter {
+  eventType?: string | string[];
+  constellationId?: string;
+  ritualRunId?: string;
+  startDate?: string;
+  endDate?: string;
+  limit?: number;
+}
+
+export interface NoteCreatedPayload {
+  noteId: string;
+  text: string;
+  timestamp: string;
+}
+
+export interface TaskCompletedPayload {
+  taskId: string;
+  completedAt: string;
+}

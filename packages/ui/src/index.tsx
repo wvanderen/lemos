@@ -23,3 +23,6 @@ export { ConstellationPicker } from './ConstellationPicker.js';
 export { ConstellationBadge } from './ConstellationBadge.js';
 export { ConstellationList } from './ConstellationList.js';
 export { ConstellationStats } from './ConstellationStats.js';
+export { ContextControl } from './ContextControl.js';
+export { JournalEntry } from './JournalEntry.js';
+export { LogViewer } from './LogViewer.js';
