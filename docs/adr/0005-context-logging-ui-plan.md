@@ -165,8 +165,8 @@ interface LogViewerProps {
 
 1. **Initialize new modules:**
 ```typescript
-import { init as contextInit, getContextManager } from '@lemos/modules/context';
-import { init as loggerInit, getLoggerInstance } from '@lemos/modules/logger';
+import { init as contextInit, getContextManager } from '@lemos/modules-context';
+import { init as loggerInit, getLoggerInstance } from '@lemos/modules-logger';
 
 // After storage initialization:
 lemosCore.registerModule(contextManifest, (bus) => contextInit(bus));

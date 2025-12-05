@@ -80,7 +80,7 @@ When a user saves a note, we want it automatically tagged with the above context
 
 1. User types note: "Had a breakthrough on the Event Bus."
 
-2. UI emits: `JournalEntrySubmitted { text: "...", timestamp: "..." }`
+2. UI emits: `NoteCreated { text: "...", timestamp: "..." }`
 
 3. LoggerModule hears it:
     - Catches event.
@@ -338,7 +338,7 @@ This enables "What was I doing at 3pm yesterday?" queries.
 
 **1. Define Core Types:**
    - Add `GlobalContext`, `LogEntry`, `LogFilter` interfaces to `@lemos/core/src/types.ts`.
-   - Define new event types in `@lemos/core/src/events.ts`.
+   - Define new event types in `@lemos/core/src/types.ts`.
 
 **2. Create ContextModule:**
    - Implement `@lemos/modules/context`.

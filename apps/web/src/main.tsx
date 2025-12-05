@@ -36,7 +36,11 @@ function App(): JSX.Element {
       lemosCore.registerModule(dopamineHeroManifest, (bus) => dopamineHeroInit(bus, storage));
       lemosCore.registerModule(ritualOSManifest, (bus) => ritualOSInit(bus, storage));
       lemosCore.registerModule(constellationOSManifest, (bus) => constellationOSInit(bus, storage));
+
+      // Initialize context module first to ensure it's available for logger
       lemosCore.registerModule(contextManifest, (bus) => contextInit(bus));
+
+      // Logger depends on context manager, so initialize it after
       lemosCore.registerModule(loggerManifest, (bus) =>
         loggerInit(bus, storage, () => getContextManager().getSnapshot())
       );
