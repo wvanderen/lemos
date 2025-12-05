@@ -38,9 +38,11 @@ export function JournalEntry({ bus }: JournalEntryProps): JSX.Element {
     setShowSuccess(true);
 
     // Hide success message after 3 seconds
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setShowSuccess(false);
     }, 3000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   const charCount = text.length;
