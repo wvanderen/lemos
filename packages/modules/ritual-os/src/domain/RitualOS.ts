@@ -1,6 +1,7 @@
 import {
   EventBus,
   RitualStartedPayload,
+  RitualStartedContextPayload,
   RitualStepCompletedPayload,
   RitualCompletedPayload,
   RitualAbandonedPayload,
