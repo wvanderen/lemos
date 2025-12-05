@@ -35,7 +35,7 @@ A module responsible for holding the current global state. It is the "source of 
 
 - Behavior: Listens to events (e.g., `ConstellationSelected`, `RitualStarted`) and updates its internal state.
 
-- Exposure: Exposes a public method `getContext()` that other modules (like the Logger) can use to "enrich" their data before saving.
+- Exposure: Exposes a public method `getSnapshot()` that other modules (like the Logger) can use to "enrich" their data before saving.
 
 2.2 The Unified Logger (@lemos/modules/logger)
 
