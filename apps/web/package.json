@@ -12,6 +12,8 @@
   "dependencies": {
     "@lemos/core": "workspace:*",
     "@lemos/modules-hello-world": "workspace:*",
+    "@lemos/modules-session-timer": "workspace:*",
+    "@lemos/modules-dopamine-hero": "workspace:*",
     "@lemos/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

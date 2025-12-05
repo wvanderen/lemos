@@ -6,5 +6,10 @@
     "composite": true,
     "declaration": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "references": [
+    { "path": "../core" },
+    { "path": "../modules/session-timer" },
+    { "path": "../modules/dopamine-hero" }
+  ]
 }

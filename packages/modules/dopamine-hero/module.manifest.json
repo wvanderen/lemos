@@ -1,0 +1,8 @@
+{
+  "id": "dopamine-hero",
+  "name": "Dopamine Hero",
+  "version": "0.1.0",
+  "type": "game",
+  "listensTo": ["SessionTick"],
+  "emits": ["EnergyUpdated"]
+}

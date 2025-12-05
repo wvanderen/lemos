@@ -15,3 +15,6 @@ export function Panel({ children }: PropsWithChildren): JSX.Element {
     </div>
   );
 }
+
+export { SessionControl } from './SessionControl.js';
+export { EnergyDisplay } from './EnergyDisplay.js';

@@ -2,45 +2,49 @@ import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { LemOSCore } from '@lemos/core';
 import { manifest as helloWorldManifest, init as helloWorldInit } from '@lemos/modules-hello-world';
-import { Panel } from '@lemos/ui';
+import { manifest as sessionTimerManifest, init as sessionTimerInit, getTimerInstance } from '@lemos/modules-session-timer';
+import { manifest as dopamineHeroManifest, init as dopamineHeroInit, getHeroInstance } from '@lemos/modules-dopamine-hero';
+import { Panel, SessionControl, EnergyDisplay } from '@lemos/ui';
 
 function App(): JSX.Element {
-  const [status, setStatus] = useState('Booting...');
-  const [lastEvent, setLastEvent] = useState<string>('');
+  const [core, setCore] = useState<LemOSCore | null>(null);
 
   useEffect(() => {
-    const core = new LemOSCore();
-    core.registerModule(helloWorldManifest, helloWorldInit);
+    const lemosCore = new LemOSCore();
 
-    core.bus.on('Pong', (event) => {
-      setLastEvent(JSON.stringify(event.payload));
-    });
+    lemosCore.registerModule(helloWorldManifest, helloWorldInit);
+    lemosCore.registerModule(sessionTimerManifest, sessionTimerInit);
+    lemosCore.registerModule(dopamineHeroManifest, dopamineHeroInit);
 
-    core.start();
-    setStatus('System Started');
+    lemosCore.start();
+    setCore(lemosCore);
 
-    core.bus.emit({
-      id: crypto.randomUUID(),
-      type: 'Ping',
-      timestamp: new Date().toISOString(),
-      payload: { msg: 'Hello from UI' },
-    });
+    console.log('LemOS Phase 1: Focus Slice initialized');
   }, []);
+
+  if (!core) {
+    return (
+      <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', background: '#0b1021', minHeight: '100vh' }}>
+        <div style={{ color: '#e8ecf1' }}>Loading...</div>
+      </div>
+    );
+  }
+
+  const timer = getTimerInstance();
+  const hero = getHeroInstance();
 
   return (
     <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', background: '#0b1021', minHeight: '100vh' }}>
       <div style={{ maxWidth: 540, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <h1 style={{ color: '#e8ecf1', letterSpacing: '0.04em', margin: 0 }}>LemOS Phase 0</h1>
+        <h1 style={{ color: '#e8ecf1', letterSpacing: '0.04em', margin: 0 }}>LemOS Phase 1</h1>
+        <p style={{ color: '#9ca3af', margin: 0 }}>The Focus Slice</p>
+
         <Panel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <div style={{ fontWeight: 600, color: '#111827' }}>{status}</div>
-            <div style={{ color: '#374151' }}>Ping → Pong path is wired; check console logs for the trace.</div>
-            {lastEvent && (
-              <div style={{ color: '#0f172a', fontSize: 14 }}>
-                Last event payload: <code>{lastEvent}</code>
-              </div>
-            )}
-          </div>
+          <EnergyDisplay bus={core.bus} hero={hero} />
+        </Panel>
+
+        <Panel>
+          <SessionControl bus={core.bus} timer={timer} />
         </Panel>
       </div>
     </div>
