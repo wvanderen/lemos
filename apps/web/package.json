@@ -17,6 +17,8 @@
     "@lemos/modules-dopamine-hero": "workspace:*",
     "@lemos/modules-ritual-os": "workspace:*",
     "@lemos/modules-constellation-os": "workspace:*",
+    "@lemos/modules-context": "workspace:*",
+    "@lemos/modules-logger": "workspace:*",
     "@lemos/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

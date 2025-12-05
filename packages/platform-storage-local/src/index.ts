@@ -1,1 +1,1 @@
-export { IndexedDBStorage } from './web.js';
+export { IndexedDBStorage } from './web';

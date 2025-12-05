@@ -1,6 +1,6 @@
 import { EventBus, IStorage } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { DopamineHero } from './domain/DopamineHero.js';
+import { DopamineHero } from './domain/DopamineHero';
 
 export { manifest };
 export { DopamineHero };

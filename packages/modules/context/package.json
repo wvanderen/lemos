@@ -1,5 +1,5 @@
 {
-  "name": "@lemos/core",
+  "name": "@lemos/modules-context",
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.ts",
@@ -12,6 +12,9 @@
     "dev": "tsc -w -p tsconfig.json",
     "test": "vitest run",
     "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "@lemos/core": "workspace:*"
   },
   "devDependencies": {
     "typescript": "5.5.4",

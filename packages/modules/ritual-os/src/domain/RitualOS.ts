@@ -1,9 +1,11 @@
 import {
   EventBus,
   RitualStartedPayload,
+  RitualStartedContextPayload,
   RitualStepCompletedPayload,
   RitualCompletedPayload,
   RitualAbandonedPayload,
+  RitualEndedContextPayload,
   RitualDefinition,
   RitualLog,
   IStorage
@@ -82,6 +84,17 @@ export class RitualOS {
         steps: definition.steps,
       },
     });
+
+    // Emit separate context event with consistent schema
+    this.bus.emit<RitualStartedContextPayload>({
+      id: crypto.randomUUID(),
+      type: 'RitualStartedContext',
+      timestamp: new Date().toISOString(),
+      payload: {
+        runId: sessionId,
+        ritualId,
+      },
+    });
   }
 
   completeStep(): void {
@@ -126,6 +139,7 @@ export class RitualOS {
 
     const totalDuration = Math.floor((Date.now() - this.activeRitual.startedAt.getTime()) / 1000);
     const constellationId = this.activeRitual.constellationId;
+    const sessionId = this.activeRitual.sessionId;
 
     this.bus.emit<RitualCompletedPayload>({
       id: crypto.randomUUID(),
@@ -133,10 +147,20 @@ export class RitualOS {
       timestamp: new Date().toISOString(),
       payload: {
         ritualId: this.activeRitual.ritualId,
-        sessionId: this.activeRitual.sessionId,
+        sessionId,
         totalDuration,
         completedAt: new Date().toISOString(),
         constellationId: constellationId ?? undefined,
+      },
+    });
+
+    // Emit RitualEnded for context management (Phase 5)
+    this.bus.emit<RitualEndedContextPayload>({
+      id: crypto.randomUUID(),
+      type: 'RitualEnded',
+      timestamp: new Date().toISOString(),
+      payload: {
+        runId: sessionId,
       },
     });
 
@@ -158,6 +182,7 @@ export class RitualOS {
     }
 
     const stepsCompleted = this.activeRitual.stepsCompleted.length;
+    const sessionId = this.activeRitual.sessionId;
 
     this.bus.emit<RitualAbandonedPayload>({
       id: crypto.randomUUID(),
@@ -165,8 +190,18 @@ export class RitualOS {
       timestamp: new Date().toISOString(),
       payload: {
         ritualId: this.activeRitual.ritualId,
-        sessionId: this.activeRitual.sessionId,
+        sessionId,
         stepsCompleted,
+      },
+    });
+
+    // Emit RitualEnded for context management (Phase 5)
+    this.bus.emit<RitualEndedContextPayload>({
+      id: crypto.randomUUID(),
+      type: 'RitualEnded',
+      timestamp: new Date().toISOString(),
+      payload: {
+        runId: sessionId,
       },
     });
 

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 import { EventBus } from '@lemos/core';
-import { SessionTimer } from '../src/domain/SessionTimer.js';
+import { SessionTimer } from '../src/domain/SessionTimer';
 
 describe('SessionTimer', () => {
   let bus: EventBus;

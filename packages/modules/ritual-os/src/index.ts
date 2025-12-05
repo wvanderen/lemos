@@ -1,6 +1,6 @@
 import { EventBus, IStorage } from '@lemos/core';
 import manifest from '../module.manifest.json';
-import { RitualOS } from './domain/RitualOS.js';
+import { RitualOS } from './domain/RitualOS';
 import morningAnchor from '../rituals/morning-anchor.json';
 
 export { manifest };

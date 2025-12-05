@@ -10,6 +10,7 @@ import {
   ConstellationCreatedPayload,
   ConstellationUpdatedPayload,
   ConstellationArchivedPayload,
+  ConstellationSelectedPayload,
 } from '@lemos/core';
 import defaultConstellations from '../../constellations/defaults.json';
 
@@ -172,6 +173,19 @@ export class ConstellationOS {
     });
 
     console.log(`Archived constellation: ${id}`);
+  }
+
+  // Context Operations (Phase 5)
+
+  selectConstellation(id: string | null): void {
+    this.bus.emit<ConstellationSelectedPayload>({
+      id: crypto.randomUUID(),
+      type: 'ConstellationSelected',
+      timestamp: new Date().toISOString(),
+      payload: { id },
+    });
+
+    console.log(`Selected constellation: ${id}`);
   }
 
   // Query Operations

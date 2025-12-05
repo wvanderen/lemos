@@ -1,13 +1,15 @@
 import { openDB, IDBPDatabase } from 'idb';
-import type { IStorage, RitualLog, ConstellationDefinition, SessionLog } from '@lemos/core';
+import type { IStorage, RitualLog, ConstellationDefinition, SessionLog, UnifiedLog, ContextSnapshot } from '@lemos/core';
 
 const DB_NAME = 'lemos-db';
-const DB_VERSION = 2; // Updated for Phase 3: Constellation Slice
+const DB_VERSION = 3; // Updated for Phase 5: Context-Aware Logging
 
 interface LemosDB {
   ritual_logs: RitualLog;
   constellation_definitions: ConstellationDefinition;
   session_logs: SessionLog;
+  unified_logs: UnifiedLog;
+  context_snapshots: ContextSnapshot;
   app_state: {
     key: string;
     value: unknown;
@@ -93,6 +95,34 @@ export class IndexedDBStorage implements IStorage {
             // No migration needed - new field is nullable
           }
 
+          // Phase 5: Context-Aware Logging (v3)
+          if (oldVersion < 3) {
+            // Create unified_logs store with indexes
+            if (!db.objectStoreNames.contains('unified_logs')) {
+              console.log('Creating object store: unified_logs');
+              const logsStore = db.createObjectStore('unified_logs', { keyPath: 'id' });
+
+              // Create indexes for efficient querying
+              logsStore.createIndex('idx_logs_constellation', 'constellationId', { unique: false });
+              logsStore.createIndex('idx_logs_ritual', 'ritualRunId', { unique: false });
+              logsStore.createIndex('idx_logs_timestamp', 'timestamp', { unique: false });
+              logsStore.createIndex('idx_logs_event_type', 'eventType', { unique: false });
+
+              console.log('Created indexes for unified_logs');
+            }
+
+            // Create context_snapshots store
+            if (!db.objectStoreNames.contains('context_snapshots')) {
+              console.log('Creating object store: context_snapshots');
+              const snapshotsStore = db.createObjectStore('context_snapshots', { keyPath: 'id' });
+
+              // Create index on timestamp for time-travel queries
+              snapshotsStore.createIndex('idx_snapshots_timestamp', 'timestamp', { unique: false });
+
+              console.log('Created indexes for context_snapshots');
+            }
+          }
+
           console.log('Database upgrade complete');
         },
         blocked() {
@@ -151,7 +181,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) return [];
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -174,7 +204,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) throw new Error('Database not initialized');
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -192,6 +222,12 @@ export class IndexedDBStorage implements IStorage {
       case 'session_logs':
         await this.db.add('session_logs', recordWithId as unknown as SessionLog);
         break;
+      case 'unified_logs':
+        await this.db.add('unified_logs', recordWithId as unknown as UnifiedLog);
+        break;
+      case 'context_snapshots':
+        await this.db.add('context_snapshots', recordWithId as unknown as ContextSnapshot);
+        break;
       case 'app_state':
         await this.db.add('app_state', recordWithId as unknown as { key: string; value: unknown });
         break;
@@ -203,7 +239,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) throw new Error('Database not initialized');
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -218,6 +254,12 @@ export class IndexedDBStorage implements IStorage {
         break;
       case 'session_logs':
         await this.db.put('session_logs', record as unknown as SessionLog);
+        break;
+      case 'unified_logs':
+        await this.db.put('unified_logs', record as unknown as UnifiedLog);
+        break;
+      case 'context_snapshots':
+        await this.db.put('context_snapshots', record as unknown as ContextSnapshot);
         break;
       case 'app_state':
         await this.db.put('app_state', record as unknown as { key: string; value: unknown });

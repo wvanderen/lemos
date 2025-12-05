@@ -8,7 +8,7 @@ import {
   SessionEndedPayload,
   RitualCompletedPayload,
 } from '@lemos/core';
-import { ConstellationOS } from '../src/domain/ConstellationOS.js';
+import { ConstellationOS } from '../src/domain/ConstellationOS';
 
 // Mock storage implementation for testing
 class MockStorage implements IStorage {

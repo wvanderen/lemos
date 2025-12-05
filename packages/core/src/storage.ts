@@ -66,3 +66,28 @@ export interface ConstellationStats {
   lastActivityAt: string | null;
   completionRate: number; // % of sessions completed vs abandoned
 }
+
+// Phase 5: Unified Logging
+export interface UnifiedLog {
+  id: string; // UUID
+  eventType: string; // e.g., "SessionEnded"
+  timestamp: string; // ISO timestamp
+  payload: string; // JSON-encoded original event
+
+  // Context fields (indexed for fast queries)
+  constellationId: string | null;
+  ritualId: string | null; // The ritual definition ID (e.g., "morning-anchor")
+  ritualRunId: string | null; // The specific run/session ID (UUID)
+  sceneId: string | null;
+  planetaryMode: string;
+}
+
+// Phase 5: Context Snapshots (optional optimization)
+export interface ContextSnapshot {
+  id: string;
+  timestamp: string;
+  activeConstellationId: string | null;
+  activeRitualRunId: string | null;
+  activeSceneId: string | null;
+  planetaryMode: string;
+}
