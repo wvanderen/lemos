@@ -28,7 +28,7 @@ export function ContextControl({
       try {
         const [constellationItems, ritualItems] = await Promise.all([
           constellationOS.listConstellations(false),
-          Promise.resolve(ritualOS.getRitualDefinitions())
+          ritualOS.getRitualDefinitions()
         ]);
         setConstellations(constellationItems);
         setRituals(ritualItems);
@@ -55,8 +55,11 @@ export function ContextControl({
     bus.on('PlanetaryModeChanged', updateContext);
 
     return () => {
-      // Note: EventBus doesn't have an off method, so cleanup is limited
-      // In production, we'd want to add an unsubscribe mechanism
+      bus.off('ConstellationSelected', updateContext);
+      bus.off('RitualStarted', updateContext);
+      bus.off('RitualEnded', updateContext);
+      bus.off('SceneChanged', updateContext);
+      bus.off('PlanetaryModeChanged', updateContext);
     };
   }, [bus, contextManager]);
 

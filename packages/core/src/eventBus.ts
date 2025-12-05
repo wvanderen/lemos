@@ -9,6 +9,12 @@ export class EventBus {
     this.listeners.set(type, existing);
   }
 
+  off<T>(type: string, listener: EventListener<T>): void {
+    const existing = this.listeners.get(type) ?? [];
+    const filtered = existing.filter((fn) => fn !== listener);
+    this.listeners.set(type, filtered);
+  }
+
   emit<T>(event: BaseEvent<T>): void {
     const list = this.listeners.get(event.type) ?? [];
     list.forEach((fn) => fn(event));

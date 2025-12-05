@@ -9,12 +9,13 @@ let instance: ConstellationOS | null = null;
 
 export function init(bus: EventBus, storage?: IStorage): void {
   instance = new ConstellationOS(bus, storage);
-  console.log('ConstellationOS module loaded');
 }
 
 export function getConstellationOSInstance(): ConstellationOS {
   if (!instance) {
-    throw new Error('ConstellationOS not initialized. Call init(bus, storage) first.');
+    throw new Error(
+      'ConstellationOS not initialized. Call init(bus, storage) first.'
+    );
   }
   return instance;
 }

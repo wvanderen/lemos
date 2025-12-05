@@ -33,15 +33,14 @@ describe('ContextManager', () => {
     expect(snapshot.activeConstellationId).toBe('test-constellation');
   });
 
-  it('updates active ritual when RitualStarted event is emitted', () => {
+  it('updates active ritual when RitualStartedContext event is emitted', () => {
     bus.emit({
       id: crypto.randomUUID(),
-      type: 'RitualStarted',
+      type: 'RitualStartedContext',
       timestamp: new Date().toISOString(),
       payload: {
         ritualId: 'morning-anchor',
-        sessionId: 'session-123',
-        steps: [],
+        runId: 'session-123',
       },
     });
 
@@ -53,12 +52,11 @@ describe('ContextManager', () => {
     // Start a ritual
     bus.emit({
       id: crypto.randomUUID(),
-      type: 'RitualStarted',
+      type: 'RitualStartedContext',
       timestamp: new Date().toISOString(),
       payload: {
         ritualId: 'morning-anchor',
-        sessionId: 'session-123',
-        steps: [],
+        runId: 'session-123',
       },
     });
 

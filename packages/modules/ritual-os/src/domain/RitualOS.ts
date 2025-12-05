@@ -83,6 +83,17 @@ export class RitualOS {
         steps: definition.steps,
       },
     });
+
+    // Emit separate context event with consistent schema
+    this.bus.emit<RitualStartedContextPayload>({
+      id: crypto.randomUUID(),
+      type: 'RitualStartedContext',
+      timestamp: new Date().toISOString(),
+      payload: {
+        runId: sessionId,
+        ritualId,
+      },
+    });
   }
 
   completeStep(): void {

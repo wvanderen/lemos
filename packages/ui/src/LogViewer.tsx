@@ -36,7 +36,7 @@ export function LogViewer({
     try {
       const [constellationItems, ritualItems] = await Promise.all([
         constellationOS.listConstellations(false),
-        Promise.resolve(ritualOS.getRitualDefinitions())
+        ritualOS.getRitualDefinitions()
       ]);
       setConstellations(constellationItems);
       setRituals(ritualItems);
@@ -64,7 +64,10 @@ export function LogViewer({
     bus.on('TaskCompleted', handleEvent);
 
     return () => {
-      // Note: EventBus doesn't have an off method
+      bus.off('SessionEnded', handleEvent);
+      bus.off('RitualCompleted', handleEvent);
+      bus.off('NoteCreated', handleEvent);
+      bus.off('TaskCompleted', handleEvent);
     };
   }, [bus, autoRefresh, loadLogs]);
 

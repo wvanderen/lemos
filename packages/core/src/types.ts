@@ -135,11 +135,11 @@ export interface GlobalContext {
 }
 
 // Logger Types (Phase 5)
-export interface LogEntry {
+export interface LogEntry<T = unknown> {
   id: string;
   eventType: string; // e.g., "SessionEnded", "NoteCreated"
   timestamp: string; // ISO timestamp
-  payload: object; // Original event data
+  payload: T; // Original event data
 
   // Auto-enriched context fields
   constellationId: string | null;

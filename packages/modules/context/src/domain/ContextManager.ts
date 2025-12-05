@@ -3,7 +3,7 @@ import {
   GlobalContext,
   PlanetaryMode,
   type ConstellationSelectedPayload,
-  type RitualStartedPayload,
+  type RitualStartedContextPayload,
   type RitualEndedContextPayload,
   type SceneChangedPayload,
   type PlanetaryModeChangedPayload,
@@ -44,9 +44,9 @@ export class ContextManager implements IContextManager {
       this.setActiveConstellation(event.payload.id);
     });
 
-    // Listen to RitualStarted events
-    this.eventBus.on<RitualStartedPayload>('RitualStarted', (event) => {
-      this.setActiveRitual(event.payload.ritualId, event.payload.sessionId);
+    // Listen to RitualStartedContext events
+    this.eventBus.on<RitualStartedContextPayload>('RitualStartedContext', (event) => {
+      this.setActiveRitual(event.payload.ritualId, event.payload.runId);
     });
 
     // Listen to RitualEnded events
