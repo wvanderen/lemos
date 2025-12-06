@@ -1,4 +1,4 @@
-import type { BaseEvent, EventListener } from './types.js';
+import type { BaseEvent, EventListener } from './types';
 export declare class EventBus {
     private listeners;
     on<T>(type: string, listener: EventListener<T>): void;

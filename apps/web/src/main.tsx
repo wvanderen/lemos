@@ -9,10 +9,12 @@ import { manifest as ritualOSManifest, init as ritualOSInit, getRitualOSInstance
 import { manifest as constellationOSManifest, init as constellationOSInit, getConstellationOSInstance } from '@lemos/modules-constellation-os';
 import { manifest as contextManifest, init as contextInit, getContextManager } from '@lemos/modules-context';
 import { manifest as loggerManifest, init as loggerInit, getLoggerInstance } from '@lemos/modules-logger';
-import { Panel, SessionControl, EnergyDisplay, RitualControl, ConstellationList, ContextControl, JournalEntry, LogViewer } from '@lemos/ui';
+import { manifest as ritualEditorManifest, init as ritualEditorInit, getRitualEditorInstance } from '@lemos/modules-ritual-editor';
+import { Panel, SessionControl, EnergyDisplay, RitualControl, ConstellationList, ContextControl, JournalEntry, LogViewer, RitualLibrary, RitualEditor } from '@lemos/ui';
 
 function App(): JSX.Element {
   const [core, setCore] = useState<LemOSCore | null>(null);
+  const [editingRitualId, setEditingRitualId] = useState<string | null>(null);
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -46,10 +48,13 @@ function App(): JSX.Element {
         loggerInit(bus, storage, () => contextManager.getSnapshot())
       );
 
+      // Initialize ritual editor with storage access (Phase 6)
+      lemosCore.registerModule(ritualEditorManifest, (bus) => ritualEditorInit(bus, storage));
+
       lemosCore.start();
       setCore(lemosCore);
 
-      console.log('LemOS Phase 5: Context-Aware Logging initialized');
+      console.log('LemOS Phase 6: Ritual Editing & Content Management initialized');
 
       // Expose database reset helper for development
       (window as unknown as { resetDatabase?: () => Promise<void> }).resetDatabase = async () => {
@@ -80,12 +85,13 @@ function App(): JSX.Element {
   const constellationOS = getConstellationOSInstance();
   const contextManager = getContextManager();
   const logger = getLoggerInstance();
+  const ritualEditor = getRitualEditorInstance();
 
   return (
     <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', background: '#0b1021', minHeight: '100vh' }}>
       <div style={{ maxWidth: 540, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <h1 style={{ color: '#e8ecf1', letterSpacing: '0.04em', margin: 0 }}>LemOS Phase 5</h1>
-        <p style={{ color: '#9ca3af', margin: 0 }}>Context-Aware Logging & Persistence</p>
+        <h1 style={{ color: '#e8ecf1', letterSpacing: '0.04em', margin: 0 }}>LemOS Phase 6</h1>
+        <p style={{ color: '#9ca3af', margin: 0 }}>Ritual Editing & Content Management</p>
 
         <Panel>
           <EnergyDisplay bus={core.bus} hero={hero} />
@@ -104,11 +110,30 @@ function App(): JSX.Element {
         </Panel>
 
         <Panel>
+          <RitualLibrary
+            bus={core.bus}
+            ritualEditor={ritualEditor}
+            onSelectRitual={(ritual) => setEditingRitualId(ritual.id)}
+          />
+        </Panel>
+
+        {editingRitualId && (
+          <Panel>
+            <RitualEditor
+              bus={core.bus}
+              ritualEditor={ritualEditor}
+              ritualId={editingRitualId}
+              onBack={() => setEditingRitualId(null)}
+            />
+          </Panel>
+        )}
+
+        <Panel>
           <ConstellationList bus={core.bus} constellationOS={constellationOS} />
         </Panel>
 
         <Panel>
-          <RitualControl bus={core.bus} ritualOS={ritualOS} />
+          <RitualControl bus={core.bus} ritualOS={ritualOS} ritualEditor={ritualEditor} />
         </Panel>
 
         <Panel>

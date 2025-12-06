@@ -16,6 +16,7 @@
     "@lemos/modules-session-timer": "workspace:*",
     "@lemos/modules-dopamine-hero": "workspace:*",
     "@lemos/modules-ritual-os": "workspace:*",
+    "@lemos/modules-ritual-editor": "workspace:*",
     "@lemos/modules-constellation-os": "workspace:*",
     "@lemos/modules-context": "workspace:*",
     "@lemos/modules-logger": "workspace:*",

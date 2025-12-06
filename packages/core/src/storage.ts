@@ -5,6 +5,7 @@ export interface IStorage {
   query<T>(table: string, filter?: Record<string, unknown>): Promise<T[]>;
   insert<T>(table: string, record: T): Promise<string>; // returns ID
   update<T>(table: string, record: T): Promise<void>; // updates existing record (must have id)
+  deleteRecord(table: string, id: string): Promise<void>; // deletes record by ID (Phase 6)
 }
 
 export interface RitualLog {

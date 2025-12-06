@@ -1,7 +1,7 @@
 # ADR 0005 - Context Logging UI Implementation Plan
 
 **Date:** 2025-12-05
-**Status:** Planned
+**Status:** Done
 **Parent ADR:** 0005-context-logging.md
 
 ## Overview

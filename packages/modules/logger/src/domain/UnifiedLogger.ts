@@ -8,6 +8,9 @@ import {
   type RitualCompletedPayload,
   type NoteCreatedPayload,
   type TaskCompletedPayload,
+  type RitualCreatedPayload,
+  type RitualUpdatedPayload,
+  type RitualDeletedPayload,
 } from '@lemos/core';
 
 export interface ILoggerModule {
@@ -43,6 +46,19 @@ export class UnifiedLogger implements ILoggerModule {
     // Listen to TaskCompleted events
     this.eventBus.on<TaskCompletedPayload>('TaskCompleted', async (event) => {
       await this.logEvent('TaskCompleted', event.payload);
+    });
+
+    // Phase 6: Listen to Ritual Editing events
+    this.eventBus.on<RitualCreatedPayload>('RitualCreated', async (event) => {
+      await this.logEvent('RitualCreated', event.payload);
+    });
+
+    this.eventBus.on<RitualUpdatedPayload>('RitualUpdated', async (event) => {
+      await this.logEvent('RitualUpdated', event.payload);
+    });
+
+    this.eventBus.on<RitualDeletedPayload>('RitualDeleted', async (event) => {
+      await this.logEvent('RitualDeleted', event.payload);
     });
   }
 

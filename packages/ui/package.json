@@ -22,7 +22,8 @@
     "@lemos/modules-ritual-os": "workspace:*",
     "@lemos/modules-constellation-os": "workspace:*",
     "@lemos/modules-context": "workspace:*",
-    "@lemos/modules-logger": "workspace:*"
+    "@lemos/modules-logger": "workspace:*",
+    "@lemos/modules-ritual-editor": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",

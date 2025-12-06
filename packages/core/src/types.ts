@@ -168,3 +168,44 @@ export interface TaskCompletedPayload {
   taskId: string;
   completedAt: string;
 }
+
+// Ritual Template Types (Phase 6)
+export type RitualStepType = 'text' | 'movement' | 'sound' | 'prompt' | 'agent' | 'custom';
+export type RitualIntensity = 'low' | 'medium' | 'high';
+
+export interface RitualTemplateStep {
+  id: string;
+  type: RitualStepType;
+  content: string;
+  duration?: number; // in seconds
+}
+
+export interface RitualTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  tags?: string[];
+  steps: RitualTemplateStep[];
+  meta: {
+    planet?: PlanetaryMode;
+    intensity?: RitualIntensity;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+// Ritual Editing Events (Phase 6)
+export interface RitualCreatedPayload {
+  ritualId: string;
+  name: string;
+  tags?: string[];
+}
+
+export interface RitualUpdatedPayload {
+  ritualId: string;
+  changes: Partial<RitualTemplate>;
+}
+
+export interface RitualDeletedPayload {
+  ritualId: string;
+}
