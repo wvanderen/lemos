@@ -10,11 +10,14 @@ import { manifest as constellationOSManifest, init as constellationOSInit, getCo
 import { manifest as contextManifest, init as contextInit, getContextManager } from '@lemos/modules-context';
 import { manifest as loggerManifest, init as loggerInit, getLoggerInstance } from '@lemos/modules-logger';
 import { manifest as ritualEditorManifest, init as ritualEditorInit, getRitualEditorInstance } from '@lemos/modules-ritual-editor';
-import { Panel, SessionControl, EnergyDisplay, RitualControl, ConstellationList, ContextControl, JournalEntry, LogViewer, RitualLibrary, RitualEditor } from '@lemos/ui';
+import { ThemeEngine, Panel, SessionControlV2, EnergyDisplay, RitualControl, ConstellationList, ContextControl, JournalEntry, LogViewer, RitualLibrary, ThemeSwitcher } from '@lemos/ui';
+
+// Import CSS
+import '@lemos/ui/styles/globals.css';
+import '@lemos/ui/styles/themes.css';
 
 function App(): JSX.Element {
   const [core, setCore] = useState<LemOSCore | null>(null);
-  const [editingRitualId, setEditingRitualId] = useState<string | null>(null);
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -88,59 +91,62 @@ function App(): JSX.Element {
   const ritualEditor = getRitualEditorInstance();
 
   return (
-    <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', background: '#0b1021', minHeight: '100vh' }}>
-      <div style={{ maxWidth: 540, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <h1 style={{ color: '#e8ecf1', letterSpacing: '0.04em', margin: 0 }}>LemOS Phase 6</h1>
-        <p style={{ color: '#9ca3af', margin: 0 }}>Ritual Editing & Content Management</p>
+    <ThemeEngine
+      bus={core.bus}
+      contextProvider={() => contextManager.getSnapshot()}
+    >
+      <div className="p-6 font-body">
+        <div className="max-w-2xl mx-auto flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-display font-bold text-text-primary" style={{ margin: 0 }}>
+                LemOS Phase 7
+              </h1>
+              <p className="text-text-secondary" style={{ margin: 0 }}>
+                Theming Engine & Component Design System
+              </p>
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              <span className="text-sm text-text-secondary">Theme:</span>
+              <ThemeSwitcher bus={core.bus} />
+            </div>
+          </div>
 
-        <Panel>
-          <EnergyDisplay bus={core.bus} hero={hero} />
-        </Panel>
-
-        <Panel>
-          <ContextControl bus={core.bus} contextManager={contextManager} constellationOS={constellationOS} ritualOS={ritualOS} />
-        </Panel>
-
-        <Panel>
-          <JournalEntry bus={core.bus} />
-        </Panel>
-
-        <Panel>
-          <LogViewer bus={core.bus} logger={logger} constellationOS={constellationOS} ritualOS={ritualOS} />
-        </Panel>
-
-        <Panel>
-          <RitualLibrary
-            bus={core.bus}
-            ritualEditor={ritualEditor}
-            onSelectRitual={(ritual) => setEditingRitualId(ritual.id)}
-          />
-        </Panel>
-
-        {editingRitualId && (
           <Panel>
-            <RitualEditor
+            <EnergyDisplay bus={core.bus} hero={hero} />
+          </Panel>
+
+          <Panel>
+            <ContextControl bus={core.bus} contextManager={contextManager} constellationOS={constellationOS} ritualOS={ritualOS} />
+          </Panel>
+
+          <Panel>
+            <JournalEntry bus={core.bus} />
+          </Panel>
+
+          <Panel>
+            <LogViewer bus={core.bus} logger={logger} constellationOS={constellationOS} ritualOS={ritualOS} />
+          </Panel>
+
+          <Panel>
+            <RitualLibrary
               bus={core.bus}
               ritualEditor={ritualEditor}
-              ritualId={editingRitualId}
-              onBack={() => setEditingRitualId(null)}
             />
           </Panel>
-        )}
 
-        <Panel>
-          <ConstellationList bus={core.bus} constellationOS={constellationOS} />
-        </Panel>
+          <Panel>
+            <ConstellationList bus={core.bus} constellationOS={constellationOS} />
+          </Panel>
 
-        <Panel>
-          <RitualControl bus={core.bus} ritualOS={ritualOS} ritualEditor={ritualEditor} />
-        </Panel>
+          <Panel>
+            <RitualControl bus={core.bus} ritualOS={ritualOS} ritualEditor={ritualEditor} />
+          </Panel>
 
-        <Panel>
-          <SessionControl bus={core.bus} timer={timer} />
-        </Panel>
+          <SessionControlV2 bus={core.bus} timer={timer} />
+        </div>
       </div>
-    </div>
+    </ThemeEngine>
   );
 }
 

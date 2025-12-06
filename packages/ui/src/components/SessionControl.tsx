@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { EventBus, BaseEvent, SessionTickPayload } from '@lemos/core';
 import type { SessionTimer } from '@lemos/modules-session-timer';
+import { Button } from '../atoms';
 
 interface SessionControlProps {
   bus: EventBus;
@@ -32,6 +33,12 @@ export function SessionControl({ bus, timer }: SessionControlProps): JSX.Element
     bus.on('SessionTick', handleTick);
     bus.on('SessionStarted', handleStarted);
     bus.on('SessionEnded', handleEnded);
+
+    return () => {
+      bus.off('SessionTick', handleTick);
+      bus.off('SessionStarted', handleStarted);
+      bus.off('SessionEnded', handleEnded);
+    };
   }, [bus, timer]);
 
   const formatTime = (seconds: number): string => {
@@ -75,87 +82,57 @@ export function SessionControl({ bus, timer }: SessionControlProps): JSX.Element
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>
+    <div className="flex flex-col gap-4">
+      <div className="text-sm font-semibold text-text-primary">
         Focus Session
       </div>
 
       {state === 'Idle' ? (
-        <button
+        <Button
           onClick={handleStart}
-          style={{
-            padding: '12px 24px',
-            fontSize: 16,
-            fontWeight: 600,
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            border: 'none',
-            borderRadius: 8,
-            cursor: 'pointer',
-          }}
+          variant="primary"
+          size="lg"
+          fullWidth
+          className="bg-gradient-to-br from-accent-primary to-purple-600 hover:from-accent-primary-hover hover:to-purple-500 shadow-glow transition-all duration-300"
         >
           Start 25min Focus
-        </button>
+        </Button>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ fontSize: 32, fontWeight: 700, color: '#111827', textAlign: 'center' }}>
-            {formatTime(remaining)}
+        <div className="flex flex-col gap-4">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-text-primary font-display mb-1">
+              {formatTime(remaining)}
+            </div>
+            <div className="text-sm text-text-secondary">
+              Elapsed: {formatTime(elapsed)}
+            </div>
           </div>
-          <div style={{ fontSize: 14, color: '#6b7280', textAlign: 'center' }}>
-            Elapsed: {formatTime(elapsed)}
-          </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+
+          <div className="flex gap-3">
             {state === 'Running' ? (
-              <button
+              <Button
                 onClick={handlePause}
-                style={{
-                  flex: 1,
-                  padding: '8px 16px',
-                  fontSize: 14,
-                  fontWeight: 600,
-                  background: '#f59e0b',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: 6,
-                  cursor: 'pointer',
-                }}
+                variant="warning"
+                className="flex-1"
               >
                 Pause
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button
                 onClick={handleResume}
-                style={{
-                  flex: 1,
-                  padding: '8px 16px',
-                  fontSize: 14,
-                  fontWeight: 600,
-                  background: '#10b981',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: 6,
-                  cursor: 'pointer',
-                }}
+                variant="success"
+                className="flex-1"
               >
                 Resume
-              </button>
+              </Button>
             )}
-            <button
+            <Button
               onClick={handleStop}
-              style={{
-                flex: 1,
-                padding: '8px 16px',
-                fontSize: 14,
-                fontWeight: 600,
-                background: '#ef4444',
-                color: 'white',
-                border: 'none',
-                borderRadius: 6,
-                cursor: 'pointer',
-              }}
+              variant="danger"
+              className="flex-1"
             >
               Stop
-            </button>
+            </Button>
           </div>
         </div>
       )}

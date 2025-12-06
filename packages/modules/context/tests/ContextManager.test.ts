@@ -17,7 +17,7 @@ describe('ContextManager', () => {
     expect(snapshot.activeConstellationId).toBeNull();
     expect(snapshot.activeRitualRunId).toBeNull();
     expect(snapshot.activeSceneId).toBeNull();
-    expect(snapshot.planetaryMode).toBe('earth');
+    expect(snapshot.planetaryMode).toBe('sun');
     expect(snapshot.timestamp).toBeDefined();
   });
 
@@ -113,6 +113,6 @@ describe('ContextManager', () => {
     expect(snapshot.activeConstellationId).toBeNull();
     expect(snapshot.activeRitualRunId).toBeNull();
     expect(snapshot.activeSceneId).toBeNull();
-    expect(snapshot.planetaryMode).toBe('earth');
+    expect(snapshot.planetaryMode).toBe('sun');
   });
 });

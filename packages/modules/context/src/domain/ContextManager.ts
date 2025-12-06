@@ -26,7 +26,7 @@ export class ContextManager implements IContextManager {
     activeRitualId: null,
     activeRitualRunId: null,
     activeSceneId: null,
-    planetaryMode: 'earth',
+    planetaryMode: 'sun',
     timestamp: new Date().toISOString(),
   };
 
@@ -121,7 +121,7 @@ export class ContextManager implements IContextManager {
       activeRitualId: null,
       activeRitualRunId: null,
       activeSceneId: null,
-      planetaryMode: 'earth',
+      planetaryMode: 'sun',
       timestamp: new Date().toISOString(),
     };
     this.updateActivity();
