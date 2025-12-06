@@ -278,6 +278,6 @@ export function RitualStep({
           </div>
         )
       }
-    </div >
+    </div>
   );
 }
