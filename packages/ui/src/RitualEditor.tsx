@@ -241,7 +241,6 @@ export function RitualEditor({ ritualEditor, ritualId, onBack }: RitualEditorPro
       </div>
 
       {/* Basic Info */}
-      {/* Basic Info */}
       <div style={{ backgroundColor: '#111827', padding: '24px', borderRadius: '12px', border: '1px solid #374151', marginBottom: '24px' }}>
         <h2 style={{ margin: '0 0 20px 0', color: '#f3f4f6', fontSize: '18px', fontWeight: 600 }}>Basic Information</h2>
 
