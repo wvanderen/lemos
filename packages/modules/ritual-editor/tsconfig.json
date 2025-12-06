@@ -7,6 +7,6 @@
     "declaration": true,
     "resolveJsonModule": true
   },
-  "include": ["src"],
+  "include": ["src", "module.manifest.json"],
   "references": [{ "path": "../../core" }]
 }

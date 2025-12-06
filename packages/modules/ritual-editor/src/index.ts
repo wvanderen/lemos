@@ -1,6 +1,6 @@
 import { EventBus, type IStorage } from '@lemos/core';
 import { RitualEditor } from './domain/RitualEditor';
-import manifest from './module.manifest.json';
+import manifest from '../module.manifest.json';
 
 export { manifest };
 export { RitualEditor };
