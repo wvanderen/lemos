@@ -4,7 +4,11 @@ import type { RitualEditor as RitualEditorDomain } from '@lemos/modules-ritual-e
 import { RitualStep } from './RitualStep';
 
 interface RitualEditorProps {
-  bus: EventBus;
+  interface RitualEditorProps {
+  ritualEditor: RitualEditorDomain;
+  ritualId: string | null;
+  onBack: () => void;
+}
   ritualEditor: RitualEditorDomain;
   ritualId: string | null;
   onBack: () => void;
