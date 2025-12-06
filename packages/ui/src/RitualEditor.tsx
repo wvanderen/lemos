@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { EventBus, RitualTemplate, RitualTemplateStep } from '@lemos/core';
+import type { EventBus, RitualTemplate, RitualTemplateStep, PlanetaryMode } from '@lemos/core';
 import { type RitualEditor as RitualEditorDomain } from '@lemos/modules-ritual-editor';
 import { RitualStep } from './RitualStep';
 
@@ -318,7 +318,10 @@ export function RitualEditor({ ritualEditor, ritualId, onBack }: RitualEditorPro
             </label>
             <select
               value={ritual.meta.planet || ''}
-              onChange={(e) => updateRitual({ meta: { ...ritual.meta, planet: e.target.value || undefined } })}
+              onChange={(e) => {
+                const value = e.target.value;
+                updateRitual({ meta: { ...ritual.meta, planet: value ? (value as PlanetaryMode) : undefined } });
+              }}
               style={{
                 width: '100%',
                 padding: '10px 14px',
@@ -331,12 +334,10 @@ export function RitualEditor({ ritualEditor, ritualId, onBack }: RitualEditorPro
               }}
             >
               <option value="">Select a planet</option>
-              <option value="Earth">🌍 Earth</option>
-              <option value="Mars">🔴 Mars</option>
-              <option value="Jupiter">🟠 Jupiter</option>
-              <option value="Saturn">🪐 Saturn</option>
-              <option value="Neptune">🔵 Neptune</option>
-              <option value="Venus">🟡 Venus</option>
+              <option value="earth">🌍 Earth</option>
+              <option value="mars">🔴 Mars</option>
+              <option value="jupiter">🟠 Jupiter</option>
+              <option value="saturn">🪐 Saturn</option>
             </select>
           </div>
 

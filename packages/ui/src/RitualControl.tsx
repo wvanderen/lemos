@@ -75,11 +75,13 @@ export function RitualControl({ bus, ritualOS, ritualEditor }: RitualControlProp
     bus.on('RitualAbandoned', handleRitualAbandoned);
 
     // Listen for ritual editor events
-    if (ritualEditor) {
-      const handleRitualChange = () => {
+    const handleRitualChange = () => {
+      if (ritualEditor) {
         ritualEditor.getRituals().then(setCustomRituals).catch(console.error);
-      };
+      }
+    };
 
+    if (ritualEditor) {
       bus.on('RitualCreated', handleRitualChange);
       bus.on('RitualUpdated', handleRitualChange);
       bus.on('RitualDeleted', handleRitualChange);
@@ -90,7 +92,7 @@ export function RitualControl({ bus, ritualOS, ritualEditor }: RitualControlProp
       bus.off('RitualStepCompleted', handleStepCompleted);
       bus.off('RitualCompleted', handleRitualCompleted);
       bus.off('RitualAbandoned', handleRitualAbandoned);
-      
+
       if (ritualEditor) {
         bus.off('RitualCreated', handleRitualChange);
         bus.off('RitualUpdated', handleRitualChange);
