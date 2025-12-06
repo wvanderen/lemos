@@ -90,6 +90,12 @@ export function RitualControl({ bus, ritualOS, ritualEditor }: RitualControlProp
       bus.off('RitualStepCompleted', handleStepCompleted);
       bus.off('RitualCompleted', handleRitualCompleted);
       bus.off('RitualAbandoned', handleRitualAbandoned);
+      
+      if (ritualEditor) {
+        bus.off('RitualCreated', handleRitualChange);
+        bus.off('RitualUpdated', handleRitualChange);
+        bus.off('RitualDeleted', handleRitualChange);
+      }
     };
   }, [bus, ritualOS, ritualEditor]);
 
