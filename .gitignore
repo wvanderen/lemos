@@ -5,8 +5,6 @@ pnpm-lock.yaml
 coverage
 dist
 .vite
-.turbo
+.turbo/
 *.js
 !*config.js
-packages/ui/.turbo
-.turbo/cache

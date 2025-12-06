@@ -1,5 +1,0 @@
-
-> @lemos/core@0.0.1 lint /home/lem/dev/lemos/packages/core
-> eslint src --ext .ts
-
-Warning: React version was set to "detect" in eslint-plugin-react settings, but the "react" package is not installed. Assuming latest React version for linting.

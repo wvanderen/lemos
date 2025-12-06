@@ -1,5 +1,0 @@
-
-> @lemos/modules-hello-world@0.0.1 lint /home/lem/dev/lemos/packages/modules/hello-world
-> eslint src --ext .ts
-
-Warning: React version was set to "detect" in eslint-plugin-react settings, but the "react" package is not installed. Assuming latest React version for linting.
