@@ -206,11 +206,7 @@ export class RitualEditor {
 
     // Create reordered steps
     const reorderedSteps = stepIds.map(id => {
-      const step = ritual.steps.find(s => s.id === id);
-      if (!step) {
-        throw new Error(`Step not found: ${id}`);
-      }
-      return step;
+      return ritual.steps.find(s => s.id === id)!;
     });
 
     await this.updateRitual(ritualId, { steps: reorderedSteps });
