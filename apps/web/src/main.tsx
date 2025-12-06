@@ -43,7 +43,7 @@ function App(): JSX.Element {
       lemosCore.registerModule(constellationOSManifest, (bus) => constellationOSInit(bus, storage));
 
       // Initialize context module first to ensure it's available for logger
-      lemosCore.registerModule(contextManifest, (bus) => contextInit(bus));
+      lemosCore.registerModule(contextManifest, (bus) => contextInit(bus, storage));
       const contextManager = getContextManager();
 
       // Logger depends on context manager, so initialize it after

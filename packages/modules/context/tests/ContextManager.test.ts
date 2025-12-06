@@ -1,14 +1,25 @@
-import { describe, expect, it, beforeEach } from 'vitest';
-import { EventBus } from '@lemos/core';
+import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { EventBus, IStorage } from '@lemos/core';
 import { ContextManager } from '../src/domain/ContextManager';
 
 describe('ContextManager', () => {
   let bus: EventBus;
   let contextManager: ContextManager;
+  let mockStorage: IStorage;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     bus = new EventBus();
-    contextManager = new ContextManager(bus);
+    mockStorage = {
+      get: vi.fn(),
+      set: vi.fn(),
+      delete: vi.fn(),
+      query: vi.fn(),
+      insert: vi.fn(),
+      update: vi.fn(),
+      deleteRecord: vi.fn(),
+    };
+    contextManager = new ContextManager(bus, mockStorage);
+    await contextManager.initialize();
   });
 
   it('initializes with default context', () => {
@@ -114,5 +125,35 @@ describe('ContextManager', () => {
     expect(snapshot.activeRitualRunId).toBeNull();
     expect(snapshot.activeSceneId).toBeNull();
     expect(snapshot.planetaryMode).toBe('sun');
+  });
+
+  it('loads planetary mode from storage during initialization', async () => {
+    const storedMode = 'moon';
+    mockStorage.get = vi.fn().mockResolvedValue(storedMode);
+
+    const newContextManager = new ContextManager(bus, mockStorage);
+    await newContextManager.initialize();
+
+    expect(mockStorage.get).toHaveBeenCalledWith('lemos.planetaryMode');
+    expect(newContextManager.getSnapshot().planetaryMode).toBe(storedMode);
+  });
+
+  it('persists planetary mode changes to storage', async () => {
+    const newMode = 'void';
+
+    contextManager.setPlanetaryMode(newMode);
+
+    // Wait for async storage call to complete
+    await new Promise(resolve => setTimeout(resolve, 10));
+
+    expect(mockStorage.set).toHaveBeenCalledWith('lemos.planetaryMode', newMode);
+  });
+
+  it('works without storage (graceful degradation)', async () => {
+    const newContextManager = new ContextManager(bus);
+    await newContextManager.initialize();
+
+    // Should still work with default mode
+    expect(newContextManager.getSnapshot().planetaryMode).toBe('sun');
   });
 });

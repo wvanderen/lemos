@@ -17,7 +17,7 @@ export const Card: React.FC<CardProps> = ({
   className = '',
   children,
 }) => {
-    const baseClasses = 'bg-bg-surface border border-border-default rounded-card shadow-card';
+  const baseClasses = 'bg-bg-surface border border-border-default rounded-card shadow-card';
 
   const combinedClasses = [
     baseClasses,
