@@ -4,6 +4,7 @@ import {
   GlobalContext,
   LogEntry,
   LogFilter,
+  type BaseEvent,
   type SessionEndedPayload,
   type RitualCompletedPayload,
   type NoteCreatedPayload,
@@ -29,35 +30,35 @@ export class UnifiedLogger implements ILoggerModule {
 
   private setupEventListeners(): void {
     // Listen to SessionEnded events
-    this.eventBus.on<SessionEndedPayload>('SessionEnded', async (event) => {
+    this.eventBus.on<SessionEndedPayload>('SessionEnded', async (event: BaseEvent<SessionEndedPayload>) => {
       await this.logEvent('SessionEnded', event.payload);
     });
 
     // Listen to RitualCompleted events
-    this.eventBus.on<RitualCompletedPayload>('RitualCompleted', async (event) => {
+    this.eventBus.on<RitualCompletedPayload>('RitualCompleted', async (event: BaseEvent<RitualCompletedPayload>) => {
       await this.logEvent('RitualCompleted', event.payload);
     });
 
     // Listen to NoteCreated events
-    this.eventBus.on<NoteCreatedPayload>('NoteCreated', async (event) => {
+    this.eventBus.on<NoteCreatedPayload>('NoteCreated', async (event: BaseEvent<NoteCreatedPayload>) => {
       await this.logEvent('NoteCreated', event.payload);
     });
 
     // Listen to TaskCompleted events
-    this.eventBus.on<TaskCompletedPayload>('TaskCompleted', async (event) => {
+    this.eventBus.on<TaskCompletedPayload>('TaskCompleted', async (event: BaseEvent<TaskCompletedPayload>) => {
       await this.logEvent('TaskCompleted', event.payload);
     });
 
     // Phase 6: Listen to Ritual Editing events
-    this.eventBus.on<RitualCreatedPayload>('RitualCreated', async (event) => {
+    this.eventBus.on<RitualCreatedPayload>('RitualCreated', async (event: BaseEvent<RitualCreatedPayload>) => {
       await this.logEvent('RitualCreated', event.payload);
     });
 
-    this.eventBus.on<RitualUpdatedPayload>('RitualUpdated', async (event) => {
+    this.eventBus.on<RitualUpdatedPayload>('RitualUpdated', async (event: BaseEvent<RitualUpdatedPayload>) => {
       await this.logEvent('RitualUpdated', event.payload);
     });
 
-    this.eventBus.on<RitualDeletedPayload>('RitualDeleted', async (event) => {
+    this.eventBus.on<RitualDeletedPayload>('RitualDeleted', async (event: BaseEvent<RitualDeletedPayload>) => {
       await this.logEvent('RitualDeleted', event.payload);
     });
   }
@@ -126,7 +127,7 @@ export class UnifiedLogger implements ILoggerModule {
       const results = await this.storage.query<LogEntry & { payload: string }>('unified_logs', queryFilter);
 
       // Parse payload strings back to objects
-      let logs: LogEntry[] = results.map((entry) => ({
+      let logs: LogEntry[] = results.map((entry: LogEntry & { payload: string }) => ({
         ...entry,
         payload: typeof entry.payload === 'string' ? JSON.parse(entry.payload) : entry.payload,
       }));
