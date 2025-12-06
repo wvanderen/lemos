@@ -30,7 +30,7 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div className={combinedClasses}>
-        <div className={`${noPadding ? '' : 'p-6'} pb-4 border-b border-border-subtle flex items-start justify-between`}>
+      {headerContent && (
         <div className={`${noPadding ? 'p-6 pb-4' : 'pb-4'} border-b border-border-subtle flex items-start justify-between`}>
           <div>
             {title && (
