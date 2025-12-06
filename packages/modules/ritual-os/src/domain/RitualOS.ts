@@ -47,6 +47,10 @@ export class RitualOS {
     return this.rituals.get(ritualId) ?? null;
   }
 
+  loadRitualDefinition(definition: RitualDefinition): void {
+    this.rituals.set(definition.id, definition);
+  }
+
   getActiveRitual(): ActiveRitual | null {
     return this.activeRitual;
   }

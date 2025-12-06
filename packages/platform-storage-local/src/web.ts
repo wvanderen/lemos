@@ -1,8 +1,8 @@
 import { openDB, IDBPDatabase } from 'idb';
-import type { IStorage, RitualLog, ConstellationDefinition, SessionLog, UnifiedLog, ContextSnapshot } from '@lemos/core';
+import type { IStorage, RitualLog, ConstellationDefinition, SessionLog, UnifiedLog, ContextSnapshot, RitualTemplate } from '@lemos/core';
 
 const DB_NAME = 'lemos-db';
-const DB_VERSION = 3; // Updated for Phase 5: Context-Aware Logging
+const DB_VERSION = 4; // Updated for Phase 6: Ritual Editing
 
 interface LemosDB {
   ritual_logs: RitualLog;
@@ -10,6 +10,7 @@ interface LemosDB {
   session_logs: SessionLog;
   unified_logs: UnifiedLog;
   context_snapshots: ContextSnapshot;
+  ritual_templates: RitualTemplate; // Phase 6: Editable ritual templates
   app_state: {
     key: string;
     value: unknown;
@@ -123,6 +124,20 @@ export class IndexedDBStorage implements IStorage {
             }
           }
 
+          // Phase 6: Ritual Editing (v4)
+          if (oldVersion < 4) {
+            // Create ritual_templates store for editable rituals
+            if (!db.objectStoreNames.contains('ritual_templates')) {
+              console.log('Creating object store: ritual_templates');
+              const templatesStore = db.createObjectStore('ritual_templates', { keyPath: 'id' });
+
+              // Create index on tags for filtering
+              templatesStore.createIndex('idx_templates_tags', 'tags', { unique: false, multiEntry: true });
+
+              console.log('Created indexes for ritual_templates');
+            }
+          }
+
           console.log('Database upgrade complete');
         },
         blocked() {
@@ -181,7 +196,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) return [];
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'ritual_templates', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -204,7 +219,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) throw new Error('Database not initialized');
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'ritual_templates', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -228,6 +243,9 @@ export class IndexedDBStorage implements IStorage {
       case 'context_snapshots':
         await this.db.add('context_snapshots', recordWithId as unknown as ContextSnapshot);
         break;
+      case 'ritual_templates':
+        await this.db.add('ritual_templates', recordWithId as unknown as RitualTemplate);
+        break;
       case 'app_state':
         await this.db.add('app_state', recordWithId as unknown as { key: string; value: unknown });
         break;
@@ -239,7 +257,7 @@ export class IndexedDBStorage implements IStorage {
     await this.ensureInit();
     if (!this.db) throw new Error('Database not initialized');
 
-    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'app_state'];
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'ritual_templates', 'app_state'];
     if (!validTables.includes(table)) {
       throw new Error(`Unknown table: ${table}`);
     }
@@ -261,8 +279,45 @@ export class IndexedDBStorage implements IStorage {
       case 'context_snapshots':
         await this.db.put('context_snapshots', record as unknown as ContextSnapshot);
         break;
+      case 'ritual_templates':
+        await this.db.put('ritual_templates', record as unknown as RitualTemplate);
+        break;
       case 'app_state':
         await this.db.put('app_state', record as unknown as { key: string; value: unknown });
+        break;
+    }
+  }
+
+  async deleteRecord(table: string, id: string): Promise<void> {
+    await this.ensureInit();
+    if (!this.db) throw new Error('Database not initialized');
+
+    const validTables = ['ritual_logs', 'constellation_definitions', 'session_logs', 'unified_logs', 'context_snapshots', 'ritual_templates', 'app_state'];
+    if (!validTables.includes(table)) {
+      throw new Error(`Unknown table: ${table}`);
+    }
+
+    switch (table) {
+      case 'ritual_logs':
+        await this.db.delete('ritual_logs', id);
+        break;
+      case 'constellation_definitions':
+        await this.db.delete('constellation_definitions', id);
+        break;
+      case 'session_logs':
+        await this.db.delete('session_logs', id);
+        break;
+      case 'unified_logs':
+        await this.db.delete('unified_logs', id);
+        break;
+      case 'context_snapshots':
+        await this.db.delete('context_snapshots', id);
+        break;
+      case 'ritual_templates':
+        await this.db.delete('ritual_templates', id);
+        break;
+      case 'app_state':
+        await this.db.delete('app_state', id);
         break;
     }
   }
