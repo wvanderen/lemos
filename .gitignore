@@ -1,12 +1,10 @@
 node_modules
-pnpm-lock.yaml
 .DS_Store
 .vscode
 coverage
 dist
 .vite
-.turbo
+.turbo/
+*.tsbuildinfo
 *.js
 !*config.js
-packages/ui/.turbo
-.turbo/cache

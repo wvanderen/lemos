@@ -32,29 +32,101 @@
 
 ---
 
-## 4. Testing
+## 4. Quality Harness & Required Commands
+
+The project uses an integrated Quality Harness (ADR-0007) to ensure consistent quality across all packages.
+
+### Required Scripts in Every Package
+
+All packages must include these scripts in their `package.json`:
+
+```json
+{
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsc -w -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  }
+}
+```
+
+### Root Commands
+
+From the repository root, you can run:
+
+- **`pnpm run typecheck`** – Type check all packages
+- **`pnpm run lint`** – Lint all packages
+- **`pnpm run test`** – Run all tests
+- **`pnpm run test:coverage`** – Run tests with coverage reports
+- **`pnpm run check`** – Run typecheck + lint + test (full quality check)
+- **`pnpm run build`** – Build all packages
+
+### Git Hooks
+
+Pre-commit and pre-push hooks are enforced via Husky:
+
+- **Pre-commit**: Runs lint, typecheck, and tests
+- **Pre-push**: Runs full `pnpm run check`
+
+These hooks ensure bad commits never land in the repo.
+
+### Coverage Requirements
+
+- **Core & modules**: ≥ 70% coverage
+- **UI packages**: ≥ 50% coverage
+- Coverage reports are uploaded as CI artifacts
+
+---
+
+## 5. Testing
 
 - Use Vitest for all packages.
-- Unit tests required for core logic in `src/domain/`.
-- Integration tests optional for early modules.
+- Unit tests required for core logic.
+- Every module must have at least one test file in `tests/`.
+- Tests are executable specs – they document expected behavior.
 
-Run:
+Run tests:
 
 ```bash
-pnpm test -- --coverage
+# Run all tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run tests in a specific package
+cd packages/modules/my-module
+pnpm test
 ```
 
 ---
 
-## 5. Linting / Formatting
+## 6. Linting / Formatting
 
-- TypeScript strict everywhere.
-- ESLint + Prettier enforced via root config.
+- TypeScript strict mode everywhere.
+- ESLint + Prettier enforced via shared configs in `/config`.
 - No `any` unless justified in comment.
+- Configs are shared across all packages for consistency.
+
+Run lint/format:
+
+```bash
+# Check formatting
+pnpm run format
+
+# Fix formatting
+pnpm run format:write
+
+# Run linter
+pnpm run lint
+```
 
 ---
 
-## 6. Documentation Hygiene
+## 7. Documentation Hygiene
 
 Each module must have:
 
@@ -67,7 +139,7 @@ Docs live beside code. Whenever you change behavior, update the markdown file in
 
 ---
 
-## 7. Architecture Decision Records (ADRs)
+## 8. Architecture Decision Records (ADRs)
 
 1. Each major choice -> a file in `docs/ADRs/`.
 2. Name pattern: `000x-short-title.md`

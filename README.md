@@ -2,6 +2,10 @@
 
 **Version:** v0.2 (Phase 2: Ritual Slice)
 
+![CI Status](https://github.com/wvanderen/lemos/workflows/Quality%20Harness/badge.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.5.4-blue)
+![pnpm](https://img.shields.io/badge/pnpm-10.22.0-orange)
+
 LemOS is a modular personal operating environment for ritual, work, and play - a local-first system that integrates focused activity, creative rituals, and symbolic computation.
 
 ## Current Features

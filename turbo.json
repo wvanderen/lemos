@@ -9,10 +9,22 @@
       "cache": false,
       "persistent": true
     },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "lint": {
       "outputs": []
     },
     "test": {
+      "outputs": []
+    },
+    "test:coverage": {
+      "outputs": ["coverage/**"],
+      "cache": true
+    },
+    "check": {
+      "dependsOn": ["typecheck", "lint", "test"],
       "outputs": []
     }
   }
