@@ -31,7 +31,7 @@ export class ContextManager implements IContextManager {
   };
 
   private lastActivityTimestamp: number = Date.now();
-  private timeoutCheckInterval: NodeJS.Timeout | null = null;
+  private timeoutCheckInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(private eventBus: EventBus) {
     this.setupEventListeners();
