@@ -118,7 +118,7 @@ export interface SceneChangedPayload {
   sceneId: string | null;
 }
 
-export type PlanetaryMode = 'earth' | 'mars' | 'jupiter' | 'saturn';
+export type PlanetaryMode = 'sun' | 'moon' | 'void';
 
 export interface PlanetaryModeChangedPayload {
   mode: PlanetaryMode;

@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Sun theme (default) - Consciousness, Clarity, Active */
+
+  /* Background colors */
+  --color-bg-canvas: #FAFAF9;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-surface-hover: #F5F5F4;
+  --color-bg-surface-active: #E7E5E4;
+  --color-bg-overlay: rgba(255, 255, 255, 0.8);
+
+  /* Text colors */
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #57534E;
+  --color-text-tertiary: #A8A29E;
+  --color-text-inverse: #FFFFFF;
+
+  /* Accent colors */
+  --color-accent-primary: #D97706; /* Amber 600 */
+  --color-accent-primary-hover: #B45309;
+  --color-accent-success: #059669;
+  --color-accent-warning: #D97706;
+  --color-accent-danger: #DC2626;
+
+  /* Border colors */
+  --color-border-default: #E7E5E4;
+  --color-border-subtle: #F5F5F4;
+  --color-border-emphasis: #D6D3D1;
+
+  /* Typography */
+  --font-family-display: "Clash Display", "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-family-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Border radius */
+  --radius-panel: 16px;
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+
+  /* Shadows */
+  --shadow-panel: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  --shadow-card: 0 2px 10px -1px rgba(0, 0, 0, 0.05);
+  --shadow-overlay: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 20px rgba(217, 119, 6, 0.15);
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-family-body);
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}

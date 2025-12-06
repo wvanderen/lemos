@@ -8,6 +8,7 @@ import type {
 } from '@lemos/core';
 import type { RitualOS } from '@lemos/modules-ritual-os';
 import type { RitualEditor } from '@lemos/modules-ritual-editor';
+import { Button } from '../atoms';
 
 interface RitualControlProps {
   bus: EventBus;
@@ -152,52 +153,36 @@ export function RitualControl({ bus, ritualOS, ritualEditor }: RitualControlProp
 
   if (activeRitual) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>
-          {activeRitual.name}
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div style={{ fontSize: 12, color: '#6b7280' }}>
+      <div className="flex flex-col gap-4 animate-in fade-in duration-300">
+        <div className="flex items-center justify-between">
+          <div className="text-sm font-semibold text-text-primary">
+            {activeRitual.name}
+          </div>
+          <div className="text-xs text-text-secondary">
             Step {activeRitual.currentStepIndex + 1} of {activeRitual.totalSteps}
           </div>
+        </div>
 
-          <div style={{ fontSize: 18, fontWeight: 600, color: '#111827', padding: '16px 0' }}>
+        <div className="flex flex-col gap-4">
+          <div className="text-lg font-semibold text-text-primary py-4 text-center bg-bg-canvas rounded-lg border border-border-default">
             {activeRitual.currentPrompt}
           </div>
 
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button
+          <div className="flex gap-2">
+            <Button
               onClick={handleCompleteStep}
-              style={{
-                flex: 1,
-                padding: '12px 24px',
-                fontSize: 16,
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: 8,
-                cursor: 'pointer',
-              }}
+              variant="success"
+              fullWidth
             >
-              {activeRitual.currentStepIndex === activeRitual.totalSteps - 1 ? 'Complete' : 'Next'}
-            </button>
-            <button
+              {activeRitual.currentStepIndex === activeRitual.totalSteps - 1 ? 'Complete Ritual' : 'Next Step'}
+            </Button>
+            <Button
               onClick={handleAbandon}
-              style={{
-                padding: '12px 16px',
-                fontSize: 14,
-                fontWeight: 600,
-                background: '#6b7280',
-                color: 'white',
-                border: 'none',
-                borderRadius: 8,
-                cursor: 'pointer',
-              }}
+              variant="secondary"
+              className="flex-shrink-0"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -205,145 +190,96 @@ export function RitualControl({ bus, ritualOS, ritualEditor }: RitualControlProp
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>
+    <div className="flex flex-col gap-4">
+      <div className="text-sm font-semibold text-text-primary">
         Rituals
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className="flex flex-col gap-3">
         {/* Built-in Rituals */}
         {rituals.length > 0 && (
-          <div style={{ fontSize: 12, fontWeight: 600, color: '#6b7280', textTransform: 'uppercase' }}>
+          <div className="text-xs font-semibold text-text-tertiary uppercase tracking-wider">
             Built-in Rituals
           </div>
         )}
         {rituals.map((ritual) => (
           <div
             key={ritual.id}
-            style={{
-              border: '1px solid #e5e7eb',
-              borderRadius: 8,
-              padding: 12,
-              background: 'white',
-            }}
+            className="border border-border-default rounded-lg p-3 bg-bg-surface hover:border-text-tertiary transition-colors"
           >
-            <div style={{ fontSize: 16, fontWeight: 600, color: '#111827', marginBottom: 4 }}>
+            <div className="text-base font-medium text-text-primary mb-1">
               {ritual.name}
             </div>
-            <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 12 }}>
+            <div className="text-xs text-text-secondary mb-3">
               {ritual.description}
             </div>
-            <div style={{ fontSize: 11, color: '#9ca3af', marginBottom: 8 }}>
+            <div className="text-xs text-text-tertiary mb-2">
               {ritual.steps.length} steps
             </div>
-            <button
+            <Button
               onClick={() => handleStartRitual(ritual.id)}
-              style={{
-                padding: '8px 16px',
-                fontSize: 14,
-                fontWeight: 600,
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: 6,
-                cursor: 'pointer',
-                width: '100%',
-              }}
+              variant="primary"
+              fullWidth
+              size="sm"
             >
               Start Ritual
-            </button>
+            </Button>
           </div>
         ))}
 
         {/* Custom Rituals */}
         {customRituals.length > 0 && (
           <>
-            {rituals.length > 0 && (
-              <div style={{ fontSize: 12, fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', marginTop: 8 }}>
-                Custom Rituals
-              </div>
-            )}
+            <div className="text-xs font-semibold text-text-tertiary uppercase tracking-wider mt-2">
+              Custom Rituals
+            </div>
             {customRituals.map((ritual) => (
               <div
                 key={ritual.id}
-                style={{
-                  border: '1px solid #e5e7eb',
-                  borderRadius: 8,
-                  padding: 12,
-                  background: 'white',
-                  position: 'relative',
-                }}
+                className="relative border border-border-default rounded-lg p-3 bg-bg-surface hover:border-text-tertiary transition-colors"
               >
                 {ritual.meta.intensity && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      fontSize: 10,
-                      padding: '2px 6px',
-                      borderRadius: 4,
-                      background:
-                        ritual.meta.intensity === 'high' ? '#fef2f2' :
-                        ritual.meta.intensity === 'medium' ? '#fefce8' :
-                        '#f0fdf4',
-                      color:
-                        ritual.meta.intensity === 'high' ? '#dc2626' :
-                        ritual.meta.intensity === 'medium' ? '#ca8a04' :
-                        '#16a34a',
-                      fontWeight: 600,
-                      textTransform: 'uppercase',
-                    }}
+                  <div className={`absolute top-2 right-2 text-[10px] px-1.5 py-0.5 rounded uppercase font-semibold
+                    ${ritual.meta.intensity === 'high' ? 'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400' :
+                      ritual.meta.intensity === 'medium' ? 'bg-yellow-50 text-yellow-600 dark:bg-yellow-900/20 dark:text-yellow-400' :
+                        'bg-green-50 text-green-600 dark:bg-green-900/20 dark:text-green-400'
+                    }`}
                   >
                     {ritual.meta.intensity}
                   </div>
                 )}
-                <div style={{ fontSize: 16, fontWeight: 600, color: '#111827', marginBottom: 4 }}>
+                <div className="text-base font-medium text-text-primary mb-1 flex items-center">
                   {ritual.name}
                   {ritual.meta.planet && (
-                    <span style={{ marginLeft: 8, fontSize: 12 }}>🪐 {ritual.meta.planet}</span>
+                    <span className="ml-2 text-xs opacity-75">🪐 {ritual.meta.planet}</span>
                   )}
                 </div>
-                <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 8 }}>
-                  {ritual.description}
+                <div className="text-xs text-text-secondary mb-2">
+                  {ritual.description || 'No description'}
                 </div>
                 {ritual.tags && ritual.tags.length > 0 && (
-                  <div style={{ display: 'flex', gap: 4, marginBottom: 8, flexWrap: 'wrap' }}>
+                  <div className="flex gap-1 mb-2 flex-wrap">
                     {ritual.tags.map((tag, index) => (
                       <span
                         key={index}
-                        style={{
-                          fontSize: 10,
-                          padding: '2px 6px',
-                          backgroundColor: '#f3f4f6',
-                          color: '#6b7280',
-                          borderRadius: 4,
-                        }}
+                        className="text-[10px] px-1.5 py-0.5 bg-bg-canvas text-text-secondary rounded border border-border-default"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 )}
-                <div style={{ fontSize: 11, color: '#9ca3af', marginBottom: 8 }}>
+                <div className="text-xs text-text-tertiary mb-2">
                   {ritual.steps.length} steps
                 </div>
-                <button
+                <Button
                   onClick={() => handleStartCustomRitual(ritual)}
-                  style={{
-                    padding: '8px 16px',
-                    fontSize: 14,
-                    fontWeight: 600,
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 6,
-                    cursor: 'pointer',
-                    width: '100%',
-                  }}
+                  variant="primary"
+                  fullWidth
+                  size="sm"
                 >
                   Start Custom Ritual
-                </button>
+                </Button>
               </div>
             ))}
           </>

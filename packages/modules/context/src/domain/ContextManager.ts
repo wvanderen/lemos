@@ -2,6 +2,7 @@ import {
   EventBus,
   GlobalContext,
   PlanetaryMode,
+  IStorage,
   type ConstellationSelectedPayload,
   type RitualStartedContextPayload,
   type RitualEndedContextPayload,
@@ -18,6 +19,7 @@ export interface IContextManager {
   setActiveScene(sceneId: string | null): void;
   setPlanetaryMode(mode: PlanetaryMode): void;
   clearContext(): void;
+  initialize(): Promise<void>;
 }
 
 export class ContextManager implements IContextManager {
@@ -26,16 +28,36 @@ export class ContextManager implements IContextManager {
     activeRitualId: null,
     activeRitualRunId: null,
     activeSceneId: null,
-    planetaryMode: 'earth',
+    planetaryMode: 'sun',
     timestamp: new Date().toISOString(),
   };
 
   private lastActivityTimestamp: number = Date.now();
   private timeoutCheckInterval: ReturnType<typeof setInterval> | null = null;
+  private readonly STORAGE_KEY = 'lemos.planetaryMode';
 
-  constructor(private eventBus: EventBus) {
+  constructor(private eventBus: EventBus, private storage?: IStorage) {
     this.setupEventListeners();
     this.startTimeoutCheck();
+  }
+
+  async initialize(): Promise<void> {
+    if (!this.storage) {
+      console.log('Context: No storage provided, using default planetary mode');
+      return;
+    }
+
+    try {
+      const storedMode = await this.storage.get<PlanetaryMode>(this.STORAGE_KEY);
+      if (storedMode) {
+        this.state.planetaryMode = storedMode;
+        console.log(`Context: Loaded planetary mode from storage: ${storedMode}`);
+      } else {
+        console.log(`Context: No stored planetary mode found, using default: ${this.state.planetaryMode}`);
+      }
+    } catch (error) {
+      console.error('Context: Failed to load planetary mode from storage:', error);
+    }
   }
 
   private setupEventListeners(): void {
@@ -113,6 +135,22 @@ export class ContextManager implements IContextManager {
     this.state.planetaryMode = mode;
     this.updateActivity();
     console.log(`Context: Planetary mode set to ${mode}`);
+
+    // Persist to storage asynchronously
+    this.persistPlanetaryMode(mode);
+  }
+
+  private async persistPlanetaryMode(mode: PlanetaryMode): Promise<void> {
+    if (!this.storage) {
+      return;
+    }
+
+    try {
+      await this.storage.set(this.STORAGE_KEY, mode);
+      console.log(`Context: Persisted planetary mode to storage: ${mode}`);
+    } catch (error) {
+      console.error('Context: Failed to persist planetary mode to storage:', error);
+    }
   }
 
   clearContext(): void {
@@ -121,7 +159,7 @@ export class ContextManager implements IContextManager {
       activeRitualId: null,
       activeRitualRunId: null,
       activeSceneId: null,
-      planetaryMode: 'earth',
+      planetaryMode: 'sun',
       timestamp: new Date().toISOString(),
     };
     this.updateActivity();

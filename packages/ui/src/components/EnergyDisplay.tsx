@@ -48,11 +48,11 @@ export function EnergyDisplay({ bus, hero }: EnergyDisplayProps): JSX.Element {
 
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>
+      <div className="flex flex-col gap-3">
+        <div className="text-sm font-semibold text-text-primary">
           Energy
         </div>
-        <div style={{ fontSize: 14, color: '#6b7280' }}>
+        <div className="text-sm text-text-secondary animate-pulse">
           Loading...
         </div>
       </div>
@@ -60,28 +60,28 @@ export function EnergyDisplay({ bus, hero }: EnergyDisplayProps): JSX.Element {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>
+    <div className="flex flex-col gap-3">
+      <div className="flex justify-between items-center">
+        <div className="text-sm font-semibold text-text-primary">
           Energy
         </div>
-        <div style={{ fontSize: 12, fontWeight: 600, color: '#8b5cf6' }}>
+        <div className="text-xs font-semibold text-accent-primary">
           Level {level}
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-        <div style={{ fontSize: 48, fontWeight: 700, color: '#8b5cf6' }}>
+      <div className="flex items-baseline gap-2">
+        <div className="text-5xl font-bold text-accent-primary font-display">
           {energy}
         </div>
-        <div style={{ fontSize: 16, color: '#6b7280' }}>
+        <div className="text-base text-text-secondary">
           +{energyPerSecond}/s
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ fontSize: 12, color: '#6b7280' }}>
-          Stay focused to earn Energy in real-time
+      <div className="flex justify-between items-center pt-2 border-t border-border-subtle">
+        <div className="text-xs text-text-secondary">
+          Stay focused to earn Energy
         </div>
-        <div style={{ fontSize: 11, color: '#9ca3af' }}>
+        <div className="text-xs font-mono text-text-tertiary">
           {xp} XP
         </div>
       </div>

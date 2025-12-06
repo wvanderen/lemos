@@ -50,7 +50,7 @@ describe('UnifiedLogger', () => {
       activeConstellationId: 'test-constellation',
       activeRitualRunId: 'run-123',
       activeSceneId: 'timer',
-      planetaryMode: 'earth',
+      planetaryMode: 'sun',
       timestamp: new Date().toISOString(),
     };
 

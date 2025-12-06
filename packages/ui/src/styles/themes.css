@@ -1,0 +1,86 @@
+/* Moon Theme - Reflection, Mystery, Receptive */
+[data-theme="moon"] {
+  /* Background colors */
+  --color-bg-canvas: #0F172A;
+  /* Slate 900 */
+  --color-bg-surface: #1E293B;
+  /* Slate 800 */
+  --color-bg-surface-hover: #334155;
+  --color-bg-surface-active: #0F172A;
+  --color-bg-overlay: rgba(15, 23, 42, 0.85);
+
+  /* Text colors */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-tertiary: #64748B;
+  --color-text-inverse: #0F172A;
+
+  /* Accent colors */
+  --color-accent-primary: #818CF8;
+  /* Indigo 400 */
+  --color-accent-primary-hover: #6366F1;
+  --color-accent-success: #34D399;
+  --color-accent-warning: #FBBF24;
+  --color-accent-danger: #F87171;
+
+  /* Border colors */
+  --color-border-default: #334155;
+  --color-border-subtle: #1E293B;
+  --color-border-emphasis: #475569;
+
+  /* Border radius - softer */
+  --radius-panel: 16px;
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-input: 8px;
+
+  /* Shadows */
+  --shadow-panel: 0 4px 25px 0 rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.2);
+  --shadow-overlay: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(129, 140, 248, 0.2);
+}
+
+/* Void Theme - Emptiness, Minimalism, Pure Potential */
+[data-theme="void"] {
+  /* Background colors */
+  --color-bg-canvas: #000000;
+  --color-bg-surface: #0a0a0a;
+  --color-bg-surface-hover: #1a1a1a;
+  --color-bg-surface-active: #000000;
+  --color-bg-overlay: rgba(0, 0, 0, 0.9);
+
+  /* Text colors */
+  --color-text-primary: #EDEDED;
+  --color-text-secondary: #A1A1A1;
+  --color-text-tertiary: #555555;
+  --color-text-inverse: #000000;
+
+  /* Accent colors - pure monochrome with subtle tint */
+  --color-accent-primary: #FFFFFF;
+  --color-accent-primary-hover: #D4D4D4;
+  --color-accent-success: #FFFFFF;
+  --color-accent-warning: #D4D4D4;
+  --color-accent-danger: #FFFFFF;
+
+  /* Border colors */
+  --color-border-default: #262626;
+  --color-border-subtle: #171717;
+  --color-border-emphasis: #404040;
+
+  /* Typography - monospace for the void */
+  --font-family-body: "JetBrains Mono", "Fira Code", monospace;
+  --font-family-display: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Border radius - sharp */
+  --radius-panel: 0px;
+  --radius-card: 0px;
+  --radius-button: 0px;
+  --radius-input: 0px;
+
+  /* Shadows - minimal but visible on pure black if needed */
+  --shadow-panel: 0 0 0 1px #333;
+  --shadow-card: 0 0 0 1px #222;
+  --shadow-overlay: none;
+  --shadow-glow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
