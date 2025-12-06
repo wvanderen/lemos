@@ -17,7 +17,7 @@ export function RitualLibrary({ bus, ritualEditor, onSelectRitual }: RitualLibra
   const [formName, setFormName] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [formTags, setFormTags] = useState('');
-  const [formPlanet, setFormPlanet] = useState('');
+  const [formPlanet, setFormPlanet] = useState<'earth' | 'mars' | 'jupiter' | 'saturn' | ''>('');
   const [formIntensity, setFormIntensity] = useState<'low' | 'medium' | 'high' | ''>('');
 
   // Load rituals and tags
@@ -77,7 +77,9 @@ export function RitualLibrary({ bus, ritualEditor, onSelectRitual }: RitualLibra
       await ritualEditor.createRitual(
         formName.trim(),
         formDescription.trim() || undefined,
-        tags
+        tags,
+        formPlanet ? (formPlanet as 'earth' | 'mars' | 'jupiter' | 'saturn') : undefined,
+        formIntensity ? (formIntensity as 'low' | 'medium' | 'high') : undefined
       );
 
       // Reset form
@@ -207,7 +209,7 @@ export function RitualLibrary({ bus, ritualEditor, onSelectRitual }: RitualLibra
               </label>
               <select
                 value={formPlanet}
-                onChange={(e) => setFormPlanet(e.target.value)}
+                onChange={(e) => setFormPlanet(e.target.value as 'earth' | 'mars' | 'jupiter' | 'saturn' | '')}
                 style={{
                   padding: '10px 14px',
                   fontSize: 14,
@@ -219,10 +221,10 @@ export function RitualLibrary({ bus, ritualEditor, onSelectRitual }: RitualLibra
                 }}
               >
                 <option value="">None</option>
-                <option value="Earth">🌍 Earth</option>
-                <option value="Mars">🔴 Mars</option>
-                <option value="Jupiter">🟠 Jupiter</option>
-                <option value="Saturn">🪐 Saturn</option>
+                <option value="earth">🌍 Earth</option>
+                <option value="mars">🔴 Mars</option>
+                <option value="jupiter">🟠 Jupiter</option>
+                <option value="saturn">🪐 Saturn</option>
               </select>
             </div>
 

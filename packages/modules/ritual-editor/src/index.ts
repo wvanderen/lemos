@@ -1,4 +1,4 @@
-import { EventBus } from '@lemos/core';
+import { EventBus, type IStorage } from '@lemos/core';
 import { RitualEditor } from './domain/RitualEditor';
 import manifest from './module.manifest.json';
 
@@ -7,7 +7,7 @@ export { RitualEditor };
 
 let editorInstance: RitualEditor | null = null;
 
-export function init(bus: EventBus, storage?: any): void {
+export function init(bus: EventBus, storage?: IStorage): void {
   editorInstance = new RitualEditor(bus, storage);
   console.log('Ritual Editor module loaded');
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { EventBus, RitualTemplate, RitualTemplateStep } from '@lemos/core';
-import type { RitualEditor as RitualEditorDomain } from '@lemos/modules-ritual-editor';
+import { type RitualEditor as RitualEditorDomain } from '@lemos/modules-ritual-editor';
 import { RitualStep } from './RitualStep';
 
 interface RitualEditorProps {

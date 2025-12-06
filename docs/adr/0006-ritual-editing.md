@@ -81,7 +81,7 @@ UI interacts through local state; persistence happens through events.
 ### 3.2 Editor Workflow
 
 1. **Create New Ritual**
-   - User opens "New Ritual" → `RitualEditor.started`.
+   - User opens "New Ritual" form.
    - Auto‑generates an unsaved ritual in memory (`draft` state).
 2. **Edit**
    - Steps can be reordered, deleted, or typed directly.
@@ -122,11 +122,15 @@ Each mutation fires the appropriate events rather than mutating shared state.
 ## 5. Example Event Flow
 
 ```
-User clicks "New Ritual"
+User clicks "New Ritual" → draft created in memory
+   ↓
+User edits ritual steps
+   ↓
+User clicks "Save"
    ↓
 RitualEditor.emit('RitualCreated')
    ↓
-Core.bus.persist → Storage.saveRitual()
+Storage.saveRitual() → persists to IndexedDB
    ↓
 Logger logs "RitualCreated" with context: constellation, planetaryMode
    ↓

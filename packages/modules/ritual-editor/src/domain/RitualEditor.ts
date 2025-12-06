@@ -5,7 +5,9 @@ import type {
   RitualTemplateStep,
   RitualCreatedPayload,
   RitualUpdatedPayload,
-  RitualDeletedPayload
+  RitualDeletedPayload,
+  PlanetaryMode,
+  RitualIntensity
 } from '@lemos/core';
 
 export class RitualEditor {
@@ -22,7 +24,13 @@ export class RitualEditor {
   /**
    * Create a new ritual template
    */
-  async createRitual(name: string, description?: string, tags?: string[]): Promise<string> {
+  async createRitual(
+    name: string,
+    description?: string,
+    tags?: string[],
+    planet?: PlanetaryMode,
+    intensity?: RitualIntensity
+  ): Promise<string> {
     const now = new Date().toISOString();
     const ritual: RitualTemplate = {
       id: crypto.randomUUID(),
@@ -31,6 +39,8 @@ export class RitualEditor {
       tags: tags?.filter(tag => tag.trim()) || undefined,
       steps: [],
       meta: {
+        planet,
+        intensity,
         createdAt: now,
         updatedAt: now,
       },

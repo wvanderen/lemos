@@ -8,9 +8,4 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 5173,
   },
-  resolve: {
-    alias: {
-      '@lemos/modules-ritual-editor': resolve(__dirname, '../../packages/modules/ritual-editor/src/index.ts'),
-    },
-  },
 });
